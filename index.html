@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>商品展示網站 | Your Shop</title>
-  <meta name="description" content="精選商品展示網站，支援 WhatsApp 查詢與 Email 聯絡。" />
-  <meta name="robots" content="noindex, nofollow" />
+
+  <title>商品展示網站</title>
 
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --card-2: #1e293b;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --primary: #38bdf8;
-      --primary-dark: #0284c7;
-      --accent: #22c55e;
-      --danger: #fb7185;
-      --border: rgba(255,255,255,0.12);
-      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-soft: #f1f5f9;
+      --text: #1e293b;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --primary-light: #dbeafe;
+      --accent: #16a34a;
+      --accent-light: #dcfce7;
+      --border: #e2e8f0;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
       --radius: 22px;
     }
 
@@ -34,14 +33,15 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
+        "Microsoft JhengHei", Arial, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(56,189,248,0.25), transparent 35%),
-        radial-gradient(circle at top right, rgba(34,197,94,0.16), transparent 30%),
-        linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
+        radial-gradient(circle at top left, #e0f2fe 0, transparent 34%),
+        radial-gradient(circle at top right, #dcfce7 0, transparent 28%),
+        var(--bg);
       color: var(--text);
+      line-height: 1.7;
       min-height: 100vh;
-      line-height: 1.6;
     }
 
     a {
@@ -54,6 +54,13 @@
       display: block;
     }
 
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
     .container {
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
@@ -62,70 +69,77 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(18px);
-      background: rgba(2,6,23,0.72);
       border-bottom: 1px solid var(--border);
     }
 
     .nav {
-      height: 76px;
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
+      padding: 10px 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
+      font-weight: 900;
     }
 
     .logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background:
-        linear-gradient(135deg, var(--primary), var(--accent));
-      box-shadow: 0 10px 30px rgba(56,189,248,0.3);
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #60a5fa, #34d399);
+      color: #ffffff;
       display: grid;
       place-items: center;
-      color: #020617;
-      font-weight: 900;
+      font-size: 20px;
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.18);
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 13px;
+      margin-top: -4px;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 20px;
       color: var(--muted);
       font-size: 15px;
+      font-weight: 600;
     }
 
     .nav-links a:hover {
-      color: var(--text);
+      color: var(--primary);
     }
 
     .nav-cta {
       padding: 10px 16px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-      font-weight: 700;
-      box-shadow: 0 10px 25px rgba(14,165,233,0.25);
+      background: var(--primary);
+      color: #ffffff !important;
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2);
     }
 
     .hero {
-      padding: 80px 0 60px;
+      padding: 74px 0 44px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 36px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 42px;
       align-items: center;
     }
 
@@ -135,97 +149,90 @@
       gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: #bae6fd;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
       font-size: 14px;
+      font-weight: 700;
       margin-bottom: 22px;
     }
 
     h1 {
-      font-size: clamp(38px, 7vw, 72px);
-      line-height: 1.05;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.08;
       letter-spacing: -2px;
       margin-bottom: 22px;
+      color: #0f172a;
     }
 
     .hero p {
-      color: var(--muted);
       font-size: 18px;
-      max-width: 660px;
+      color: var(--muted);
+      max-width: 640px;
       margin-bottom: 30px;
     }
 
     .hero-actions {
       display: flex;
-      gap: 14px;
       flex-wrap: wrap;
+      gap: 14px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       padding: 13px 18px;
       border-radius: 14px;
+      font-weight: 800;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.08);
-      color: white;
-      font-weight: 700;
+      background: var(--surface);
+      color: var(--text);
       cursor: pointer;
       transition: 0.2s ease;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      background: rgba(255,255,255,0.13);
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.1);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
     }
 
     .btn-whatsapp {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      border: none;
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
     }
 
     .hero-card {
+      background: rgba(255, 255, 255, 0.86);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 32px;
       padding: 22px;
-      background: rgba(255,255,255,0.07);
       box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
     }
 
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -80px -80px auto auto;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: rgba(56,189,248,0.2);
-      filter: blur(8px);
-    }
-
-    .mock-product {
+    .featured-image {
       aspect-ratio: 1 / 1;
-      border-radius: 18px;
+      border-radius: 24px;
       background:
-        linear-gradient(135deg, rgba(56,189,248,0.7), rgba(34,197,94,0.55)),
-        radial-gradient(circle, rgba(255,255,255,0.4), transparent 45%);
+        linear-gradient(135deg, rgba(219, 234, 254, 0.95), rgba(220, 252, 231, 0.95)),
+        #ffffff;
       display: grid;
       place-items: center;
       text-align: center;
-      color: white;
-      font-size: 28px;
-      font-weight: 900;
       padding: 24px;
+      color: #1e40af;
+      font-size: 30px;
+      font-weight: 900;
+      border: 1px solid #dbeafe;
     }
 
     .stats {
@@ -236,15 +243,16 @@
     }
 
     .stat {
+      background: #ffffff;
       border: 1px solid var(--border);
-      background: rgba(15,23,42,0.65);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 14px;
     }
 
     .stat strong {
       display: block;
       font-size: 20px;
+      color: #0f172a;
     }
 
     .stat span {
@@ -253,106 +261,151 @@
     }
 
     section {
-      padding: 60px 0;
+      padding: 54px 0;
     }
 
     .section-head {
       display: flex;
-      justify-content: space-between;
       align-items: end;
+      justify-content: space-between;
       gap: 24px;
-      margin-bottom: 24px;
+      margin-bottom: 26px;
     }
 
     .section-head h2 {
       font-size: clamp(28px, 4vw, 42px);
-      letter-spacing: -1px;
+      line-height: 1.15;
+      color: #0f172a;
+      margin-bottom: 8px;
     }
 
     .section-head p {
       color: var(--muted);
-      max-width: 560px;
+      max-width: 620px;
     }
 
-    .filters {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
-
-    .filter-btn {
-      padding: 9px 14px;
-      border-radius: 999px;
+    .product-panel {
+      background: rgba(255, 255, 255, 0.82);
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--muted);
-      cursor: pointer;
-    }
-
-    .filter-btn.active,
-    .filter-btn:hover {
-      color: white;
-      background: rgba(56,189,248,0.18);
-      border-color: rgba(56,189,248,0.45);
-    }
-
-    .search-box {
-      width: 100%;
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
       margin-bottom: 24px;
     }
 
-    .search-box input {
+    .search-main {
+      margin-bottom: 16px;
+    }
+
+    .search-main label,
+    .filter-group label {
+      display: block;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .search-main input {
       width: 100%;
-      padding: 15px 16px;
+      padding: 16px 17px;
       border-radius: 16px;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.08);
-      color: white;
+      background: #ffffff;
+      color: var(--text);
       outline: none;
       font-size: 16px;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.04);
     }
 
-    .search-box input::placeholder {
-      color: #64748b;
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      font-size: 15px;
+      min-height: 48px;
+    }
+
+    .search-main input:focus,
+    .filter-group select:focus,
+    .filter-group input:focus {
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.28);
+    }
+
+    .reset-btn {
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .result-row strong {
+      color: #0f172a;
     }
 
     .products {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      gap: 20px;
     }
 
     .product-card {
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.07);
       border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
       transition: 0.2s ease;
     }
 
     .product-card:hover {
       transform: translateY(-5px);
-      border-color: rgba(56,189,248,0.45);
+      box-shadow: 0 22px 44px rgba(15, 23, 42, 0.11);
     }
 
-    .product-img {
+    .product-image {
+      position: relative;
       aspect-ratio: 1 / 1;
       background:
-        linear-gradient(135deg, rgba(56,189,248,0.25), rgba(34,197,94,0.2)),
-        #1e293b;
+        linear-gradient(135deg, #eff6ff, #f0fdf4);
       display: grid;
       place-items: center;
-      color: #cbd5e1;
-      font-weight: 800;
+      color: #2563eb;
+      font-weight: 900;
       text-align: center;
       padding: 20px;
-      position: relative;
       overflow: hidden;
     }
 
-    .product-img img {
+    .product-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -364,124 +417,160 @@
       left: 12px;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(2,6,23,0.72);
-      color: #bae6fd;
+      background: rgba(255, 255, 255, 0.92);
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
       font-size: 12px;
-      border: 1px solid var(--border);
+      font-weight: 800;
+      z-index: 2;
     }
 
     .product-body {
-      padding: 16px;
+      padding: 17px;
     }
 
     .product-title {
       font-size: 17px;
-      font-weight: 800;
+      font-weight: 900;
+      color: #0f172a;
       margin-bottom: 6px;
     }
 
+    .product-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .meta-pill {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 8px;
+    }
+
     .product-desc {
+      min-height: 48px;
       color: var(--muted);
       font-size: 14px;
-      min-height: 44px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .price-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       margin-bottom: 14px;
     }
 
     .price {
-      font-size: 20px;
+      color: #1d4ed8;
+      font-size: 21px;
       font-weight: 900;
-      color: #e0f2fe;
     }
 
     .stock {
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 700;
+      color: #15803d;
+      background: var(--accent-light);
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .product-actions {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
+      gap: 9px;
     }
 
     .small-btn {
-      padding: 10px 12px;
-      border-radius: 12px;
+      display: block;
       text-align: center;
+      padding: 10px 12px;
+      border-radius: 13px;
+      border: 1px solid var(--border);
+      background: #ffffff;
       font-weight: 800;
       font-size: 14px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid var(--border);
+      transition: 0.2s ease;
     }
 
     .small-btn:hover {
-      background: rgba(255,255,255,0.13);
+      background: var(--surface-soft);
     }
 
     .small-btn.whatsapp {
-      background: rgba(34,197,94,0.18);
-      border-color: rgba(34,197,94,0.35);
-      color: #bbf7d0;
+      background: #dcfce7;
+      border-color: #bbf7d0;
+      color: #15803d;
     }
 
-    .info-grid {
+    .about-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 20px;
     }
 
     .info-card {
+      background: rgba(255, 255, 255, 0.88);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      background: rgba(255,255,255,0.07);
-      padding: 22px;
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .info-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--primary-light);
+      color: #1d4ed8;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      margin-bottom: 14px;
     }
 
     .info-card h3 {
-      margin-bottom: 10px;
+      color: #0f172a;
+      margin-bottom: 8px;
       font-size: 20px;
     }
 
-    .info-card p,
-    .info-card li {
+    .info-card p {
       color: var(--muted);
     }
 
-    .info-card ul {
-      padding-left: 20px;
-    }
-
-    .contact {
-      border: 1px solid var(--border);
-      border-radius: calc(var(--radius) + 8px);
-      padding: 32px;
+    .contact-box {
       background:
-        linear-gradient(135deg, rgba(56,189,248,0.12), rgba(34,197,94,0.10)),
-        rgba(255,255,255,0.07);
+        linear-gradient(135deg, rgba(219, 234, 254, 0.9), rgba(220, 252, 231, 0.9)),
+        #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 34px;
       box-shadow: var(--shadow);
     }
 
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 28px;
       align-items: center;
     }
 
-    .contact h2 {
-      font-size: clamp(28px, 4vw, 44px);
+    .contact-box h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+      color: #0f172a;
       margin-bottom: 12px;
     }
 
-    .contact p {
+    .contact-box p {
       color: var(--muted);
       margin-bottom: 22px;
     }
@@ -495,10 +584,10 @@
     .contact-form textarea {
       width: 100%;
       padding: 14px 15px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(2,6,23,0.45);
-      color: white;
+      border-radius: 15px;
+      border: 1px solid #cbd5e1;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--text);
       outline: none;
       font-size: 15px;
       font-family: inherit;
@@ -510,23 +599,39 @@
     }
 
     footer {
-      padding: 32px 0;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
+      padding: 34px 0;
       text-align: center;
+      color: var(--muted);
       font-size: 14px;
+      border-top: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.65);
     }
 
     .empty {
       grid-column: 1 / -1;
       text-align: center;
-      color: var(--muted);
-      padding: 40px;
-      border: 1px dashed var(--border);
+      padding: 42px;
+      border: 1px dashed #cbd5e1;
       border-radius: var(--radius);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.7);
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 1100px) {
+      .products {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .reset-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 860px) {
       .hero-grid,
       .contact-grid {
         grid-template-columns: 1fr;
@@ -536,16 +641,22 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .info-grid {
+      .about-grid {
         grid-template-columns: 1fr;
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 640px) {
+      .container {
+        width: min(100% - 24px, 1180px);
+      }
+
       .nav {
-        height: auto;
-        padding: 14px 0;
-        align-items: flex-start;
+        min-height: auto;
       }
 
       .nav-links {
@@ -553,10 +664,30 @@
       }
 
       .hero {
-        padding-top: 50px;
+        padding: 46px 0 30px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .btn {
+        width: 100%;
       }
 
       .products {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-grid {
         grid-template-columns: 1fr;
       }
 
@@ -568,8 +699,12 @@
         display: block;
       }
 
-      .contact {
-        padding: 22px;
+      .contact-box {
+        padding: 24px;
+      }
+
+      .result-row {
+        display: block;
       }
     }
   </style>
@@ -581,14 +716,14 @@
       <a class="brand" href="#">
         <div class="logo">S</div>
         <div>
-          <div>Your Shop</div>
-          <small style="color: var(--muted); font-weight: 500;">商品展示目錄</small>
+          Your Shop
+          <small>商品展示目錄</small>
         </div>
       </a>
 
       <nav class="nav-links">
         <a href="#products">商品</a>
-        <a href="#about">關於</a>
+        <a href="#about">特色</a>
         <a href="#contact">聯絡</a>
         <a class="nav-cta" href="#products">查看商品</a>
       </nav>
@@ -599,38 +734,44 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <div class="badge">✨ GitHub Pages 商品展示網站</div>
-          <h1>簡潔、美觀、容易更新的商品目錄</h1>
+          <div class="badge">✨ 精選商品展示</div>
+          <h1>簡潔美觀的商品目錄網站</h1>
           <p>
-            這是一個適合小型商店、工作室、手作產品或機械零件展示的網站。
-            現階段以商品陳列和 WhatsApp 查詢為主，未來可升級購物車、會員與線上付款。
+            適合商品展示、報價查詢、作品目錄或小型商店頁面。
+            支援搜尋、分類、價錢篩選、時間排序和 WhatsApp 查詢。
           </p>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="#products">瀏覽商品</a>
-            <a class="btn btn-whatsapp" href="https://wa.me/885257052661?text=你好，我想查詢商品。" target="_blank" rel="noopener">
+            <a
+              class="btn btn-whatsapp"
+              href="https://wa.me/85212345678?text=你好，我想查詢商品。"
+              target="_blank"
+              rel="noopener"
+            >
               WhatsApp 查詢
             </a>
           </div>
         </div>
 
         <div class="hero-card">
-          <div class="mock-product">
-            Featured<br />Products
+          <div class="featured-image">
+            Product<br />
+            Finder
           </div>
 
           <div class="stats">
             <div class="stat">
-              <strong>24/7</strong>
-              <span>隨時查看</span>
+              <strong>搜尋</strong>
+              <span>快速找貨</span>
             </div>
             <div class="stat">
-              <strong>0 元</strong>
-              <span>GitHub 成本</span>
+              <strong>篩選</strong>
+              <span>價錢 / 時間</span>
             </div>
             <div class="stat">
-              <strong>V2</strong>
-              <span>可升級購物車</span>
+              <strong>新增</strong>
+              <span>只改資料</span>
             </div>
           </div>
         </div>
@@ -641,21 +782,72 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>商品陳列</h2>
-            <p>你可以直接在 HTML 裡修改商品資料，或者之後改成讀取 products.json。</p>
+            <h2>尋找貨物</h2>
+            <p>
+              你可以用關鍵字搜尋商品，也可以按分類、狀態、價錢或上架時間篩選。
+            </p>
           </div>
         </div>
 
-        <div class="search-box">
-          <input id="searchInput" type="search" placeholder="搜尋商品名稱、分類或描述..." />
+        <div class="product-panel">
+          <div class="search-main">
+            <label for="searchInput">搜尋貨物</label>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="輸入商品名稱、編號、分類、描述，例如：P008 / 套件 / 新品"
+            />
+          </div>
+
+          <div class="filter-grid">
+            <div class="filter-group">
+              <label for="categoryFilter">分類</label>
+              <select id="categoryFilter">
+                <option value="全部">全部分類</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="tagFilter">標籤</label>
+              <select id="tagFilter">
+                <option value="全部">全部標籤</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="minPrice">最低價錢</label>
+              <input id="minPrice" type="number" min="0" placeholder="例如 100" />
+            </div>
+
+            <div class="filter-group">
+              <label for="maxPrice">最高價錢</label>
+              <input id="maxPrice" type="number" min="0" placeholder="例如 500" />
+            </div>
+
+            <div class="filter-group">
+              <label for="sortSelect">排序</label>
+              <select id="sortSelect">
+                <option value="newest">最新上架</option>
+                <option value="oldest">最舊上架</option>
+                <option value="priceLow">價錢：低至高</option>
+                <option value="priceHigh">價錢：高至低</option>
+                <option value="nameAZ">名稱：A 至 Z</option>
+              </select>
+            </div>
+
+            <button class="reset-btn" id="resetFilters" type="button">
+              重設
+            </button>
+          </div>
         </div>
 
-        <div class="filters">
-          <button class="filter-btn active" data-category="全部">全部</button>
-          <button class="filter-btn" data-category="熱賣">熱賣</button>
-          <button class="filter-btn" data-category="新品">新品</button>
-          <button class="filter-btn" data-category="零件">零件</button>
-          <button class="filter-btn" data-category="套件">套件</button>
+        <div class="result-row">
+          <div>
+            找到 <strong id="resultCount">0</strong> 件貨物
+          </div>
+          <div>
+            提示：新增產品只需要修改 JavaScript 入面的 <strong>products</strong> 資料
+          </div>
         </div>
 
         <div id="productGrid" class="products"></div>
@@ -666,25 +858,30 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>下一階段可升級功能</h2>
-            <p>先用靜態展示網站驗證需求，之後再逐步加入交易功能。</p>
+            <h2>新增產品方式</h2>
+            <p>
+              不需要改 HTML 結構，只需要在 products 陣列新增一件商品資料。
+            </p>
           </div>
         </div>
 
-        <div class="info-grid">
+        <div class="about-grid">
           <div class="info-card">
-            <h3>購物車</h3>
-            <p>可以先做前端購物車，讓客人選好商品後用 WhatsApp 發送訂單內容。</p>
+            <div class="info-icon">➕</div>
+            <h3>簡單新增</h3>
+            <p>複製一段產品資料，改 ID、名稱、價錢、圖片和描述即可。</p>
           </div>
 
           <div class="info-card">
-            <h3>付款</h3>
-            <p>之後可接 Stripe、PayPal、PayMe 或 FPS。不要自行儲存信用卡資料。</p>
+            <div class="info-icon">🔍</div>
+            <h3>自動搜尋</h3>
+            <p>新加的產品會自動出現在搜尋和篩選功能，不需要另外設定。</p>
           </div>
 
           <div class="info-card">
-            <h3>會員</h3>
-            <p>建議使用 Firebase Auth 或 Supabase Auth，不要自己寫密碼系統。</p>
+            <div class="info-icon">📱</div>
+            <h3>手機電腦適用</h3>
+            <p>版面會自動適應手機和平板電腦尺寸。</p>
           </div>
         </div>
       </div>
@@ -692,20 +889,28 @@
 
     <section id="contact">
       <div class="container">
-        <div class="contact">
+        <div class="contact-box">
           <div class="contact-grid">
             <div>
-              <h2>想查詢商品？</h2>
+              <h2>有興趣了解更多？</h2>
               <p>
-                你可以把這個表單暫時改成 EmailJS、Formspree 或 Google Forms。
-                現在範本會用 mailto 開啟電郵。
+                可透過 WhatsApp 或 Email 聯絡查詢商品、報價、庫存或訂購安排。
               </p>
 
               <div class="hero-actions">
-                <a class="btn btn-whatsapp" href="https://wa.me/85212345678?text=你好，我想查詢商品。" target="_blank" rel="noopener">
+                <a
+                  class="btn btn-whatsapp"
+                  href="https://wa.me/85212345678?text=你好，我想查詢商品。"
+                  target="_blank"
+                  rel="noopener"
+                >
                   WhatsApp 聯絡
                 </a>
-                <a class="btn" href="mailto:your@email.com?subject=商品查詢&body=你好，我想查詢商品。">
+
+                <a
+                  class="btn"
+                  href="mailto:your@email.com?subject=商品查詢&body=你好，我想查詢商品。"
+                >
                   Email 查詢
                 </a>
               </div>
@@ -724,110 +929,311 @@
   </main>
 
   <footer>
-    © <span id="year"></span> Your Shop. All rights reserved. | Hosted on GitHub Pages
+    © <span id="year"></span> Your Shop. All rights reserved.
   </footer>
 
   <script>
+    /*
+      ==================================================
+      你主要只需要修改這幾個地方
+      ==================================================
+    */
+
     const whatsappNumber = "85257052661";
-    const contactEmail = "cash2ioy@gmail.com";
+    const contactEmail = "cash2joy@gmail.com";
+
+    /*
+      新增產品方法：
+
+      1. 複製下面其中一段產品資料
+      2. 改 id、name、category、tag、price、priceValue、stock、image、desc、date
+      3. 記得每件產品之間要有逗號 ,
+
+      欄位說明：
+      id          = 商品編號
+      name        = 商品名稱
+      category    = 分類，例如 套件 / 零件 / 配件
+      tag         = 標籤，例如 新品 / 熱賣 / 推薦
+      price       = 顯示用價錢文字
+      priceValue  = 數字價錢，用於價錢篩選和排序
+      stock       = 庫存狀態，例如 現貨 / 預訂 / 少量
+      image       = 圖片路徑
+      desc        = 商品描述
+      date        = 上架日期，格式必須是 YYYY-MM-DD
+    */
 
     const products = [
       {
         id: "P001",
-        name: "JH #30",
+        name: "HJ 01",
         category: "套件",
         tag: "熱賣",
         price: "HKD 280",
+        priceValue: 280,
         stock: "現貨",
         image: "images/product-001.jpg",
-        desc: "適合 4DOF 機械臂的 3D 列印三指同步夾爪。"
+        desc: "這裡可以放商品簡介，例如用途、特色或尺寸。",
+        date: "2026-09-16"
       },
       {
         id: "P002",
-        name: "DS3218 高扭力舵機",
+        name: "商品名稱 02",
         category: "零件",
         tag: "新品",
         price: "HKD 95",
+        priceValue: 95,
         stock: "現貨",
         image: "images/product-002.jpg",
-        desc: "適合機械臂、夾爪和機械車使用的高扭力金屬齒舵機。"
+        desc: "這裡可以放商品簡介，例如適合什麼場合使用。",
+        date: "2026-09-12"
       },
       {
         id: "P003",
-        name: "PCA9685 舵機控制板",
+        name: "商品名稱 03",
         category: "零件",
         tag: "熱賣",
         price: "HKD 45",
+        priceValue: 45,
         stock: "少量",
         image: "images/product-003.jpg",
-        desc: "16 路 PWM 舵機控制板，適合 ESP32、Arduino 專案。"
+        desc: "這裡可以放商品簡介，例如材質、規格或配件。",
+        date: "2026-09-10"
       },
       {
         id: "P004",
-        name: "機械臂 4DOF 基礎套件",
+        name: "商品名稱 04",
         category: "套件",
         tag: "新品",
         price: "HKD 520",
+        priceValue: 520,
         stock: "預訂",
         image: "images/product-004.jpg",
-        desc: "包含基本機械臂結構、舵機固定座與夾爪安裝位。"
+        desc: "這裡可以放商品簡介，例如套裝內容或交貨時間。",
+        date: "2026-09-08"
+      },
+      {
+        id: "P005",
+        name: "商品名稱 05",
+        category: "配件",
+        tag: "推薦",
+        price: "HKD 180",
+        priceValue: 180,
+        stock: "現貨",
+        image: "images/product-005.jpg",
+        desc: "這裡可以放商品簡介，例如產品賣點或注意事項。",
+        date: "2026-08-25"
+      },
+      {
+        id: "P006",
+        name: "商品名稱 06",
+        category: "零件",
+        tag: "新品",
+        price: "HKD 68",
+        priceValue: 68,
+        stock: "現貨",
+        image: "images/product-006.jpg",
+        desc: "這裡可以放商品簡介，例如顏色、尺寸或型號。",
+        date: "2026-08-20"
+      },
+      {
+        id: "P007",
+        name: "商品名稱 07",
+        category: "配件",
+        tag: "熱賣",
+        price: "HKD 120",
+        priceValue: 120,
+        stock: "少量",
+        image: "images/product-007.jpg",
+        desc: "這裡可以放商品簡介，例如兼容性或使用方法。",
+        date: "2026-08-15"
+      },
+      {
+        id: "P008",
+        name: "商品名稱 08",
+        category: "套件",
+        tag: "新品",
+        price: "HKD 350",
+        priceValue: 350,
+        stock: "預訂",
+        image: "images/product-008.jpg",
+        desc: "這裡可以放商品簡介，例如訂製選項或包裝內容。",
+        date: "2026-08-01"
       }
     ];
 
-    let currentCategory = "全部";
+    /*
+      ==================================================
+      以下程式一般不需要修改
+      ==================================================
+    */
 
     const productGrid = document.getElementById("productGrid");
     const searchInput = document.getElementById("searchInput");
-    const filterButtons = document.querySelectorAll(".filter-btn");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const tagFilter = document.getElementById("tagFilter");
+    const minPriceInput = document.getElementById("minPrice");
+    const maxPriceInput = document.getElementById("maxPrice");
+    const sortSelect = document.getElementById("sortSelect");
+    const resetFilters = document.getElementById("resetFilters");
+    const resultCount = document.getElementById("resultCount");
 
     function createWhatsAppLink(product) {
       const text = `你好，我想查詢商品：${product.name}（${product.id}），價格：${product.price}`;
       return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
     }
 
-    function renderProducts() {
+    function createEmailLink(product) {
+      const subject = `商品查詢：${product.name}`;
+      const body = `你好，我想查詢商品：${product.name}（${product.id}），價格：${product.price}`;
+      return `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function getUniqueValues(key) {
+      const values = products.map((product) => product[key]).filter(Boolean);
+      return [...new Set(values)];
+    }
+
+    function fillSelectOptions(selectElement, values, defaultText) {
+      selectElement.innerHTML = `<option value="全部">${defaultText}</option>`;
+
+      values.forEach((value) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        selectElement.appendChild(option);
+      });
+    }
+
+    function setupFilters() {
+      fillSelectOptions(categoryFilter, getUniqueValues("category"), "全部分類");
+      fillSelectOptions(tagFilter, getUniqueValues("tag"), "全部標籤");
+    }
+
+    function getFilteredProducts() {
       const keyword = searchInput.value.trim().toLowerCase();
+      const selectedCategory = categoryFilter.value;
+      const selectedTag = tagFilter.value;
+      const minPrice = Number(minPriceInput.value);
+      const maxPrice = Number(maxPriceInput.value);
+      const hasMinPrice = minPriceInput.value !== "";
+      const hasMaxPrice = maxPriceInput.value !== "";
 
-      const filtered = products.filter(product => {
+      let filtered = products.filter((product) => {
+        const searchContent = `
+          ${product.id}
+          ${product.name}
+          ${product.category}
+          ${product.tag}
+          ${product.price}
+          ${product.stock}
+          ${product.desc}
+          ${product.date}
+        `.toLowerCase();
+
+        const matchKeyword = searchContent.includes(keyword);
+
         const matchCategory =
-          currentCategory === "全部" ||
-          product.category === currentCategory ||
-          product.tag === currentCategory;
+          selectedCategory === "全部" || product.category === selectedCategory;
 
-        const content = `${product.name} ${product.category} ${product.tag} ${product.desc} ${product.id}`.toLowerCase();
-        const matchKeyword = content.includes(keyword);
+        const matchTag =
+          selectedTag === "全部" || product.tag === selectedTag;
 
-        return matchCategory && matchKeyword;
+        const matchMinPrice =
+          !hasMinPrice || product.priceValue >= minPrice;
+
+        const matchMaxPrice =
+          !hasMaxPrice || product.priceValue <= maxPrice;
+
+        return (
+          matchKeyword &&
+          matchCategory &&
+          matchTag &&
+          matchMinPrice &&
+          matchMaxPrice
+        );
       });
 
+      const sortValue = sortSelect.value;
+
+      filtered.sort((a, b) => {
+        if (sortValue === "newest") {
+          return new Date(b.date) - new Date(a.date);
+        }
+
+        if (sortValue === "oldest") {
+          return new Date(a.date) - new Date(b.date);
+        }
+
+        if (sortValue === "priceLow") {
+          return a.priceValue - b.priceValue;
+        }
+
+        if (sortValue === "priceHigh") {
+          return b.priceValue - a.priceValue;
+        }
+
+        if (sortValue === "nameAZ") {
+          return a.name.localeCompare(b.name, "zh-Hant");
+        }
+
+        return 0;
+      });
+
+      return filtered;
+    }
+
+    function renderProducts() {
+      const filtered = getFilteredProducts();
+
+      resultCount.textContent = filtered.length;
       productGrid.innerHTML = "";
 
       if (filtered.length === 0) {
-        productGrid.innerHTML = `<div class="empty">找不到相關商品。</div>`;
+        productGrid.innerHTML = `<div class="empty">找不到相關貨物，請嘗試更改搜尋字眼或篩選條件。</div>`;
         return;
       }
 
-      filtered.forEach(product => {
+      filtered.forEach((product) => {
         const card = document.createElement("article");
         card.className = "product-card";
 
         card.innerHTML = `
-          <div class="product-img">
+          <div class="product-image">
             <span class="tag">${product.tag}</span>
-            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div>${product.name}</div>');" />
+            <img
+              src="${product.image}"
+              alt="${product.name}"
+              onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<div>${product.name}</div>');"
+            />
           </div>
+
           <div class="product-body">
             <div class="product-title">${product.name}</div>
+
+            <div class="product-meta">
+              <span class="meta-pill">${product.id}</span>
+              <span class="meta-pill">${product.category}</span>
+              <span class="meta-pill">上架：${product.date}</span>
+            </div>
+
             <div class="product-desc">${product.desc}</div>
+
             <div class="price-row">
               <div class="price">${product.price}</div>
               <div class="stock">${product.stock}</div>
             </div>
+
             <div class="product-actions">
-              <a class="small-btn whatsapp" href="${createWhatsAppLink(product)}" target="_blank" rel="noopener">
+              <a
+                class="small-btn whatsapp"
+                href="${createWhatsAppLink(product)}"
+                target="_blank"
+                rel="noopener"
+              >
                 WhatsApp 查詢
               </a>
-              <a class="small-btn" href="mailto:${contactEmail}?subject=商品查詢：${encodeURIComponent(product.name)}&body=${encodeURIComponent("你好，我想查詢商品：" + product.name + "（" + product.id + "）")}">
+
+              <a class="small-btn" href="${createEmailLink(product)}">
                 Email 查詢
               </a>
             </div>
@@ -838,18 +1244,25 @@
       });
     }
 
-    filterButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        filterButtons.forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-        currentCategory = button.dataset.category;
-        renderProducts();
-      });
-    });
+    function resetAllFilters() {
+      searchInput.value = "";
+      categoryFilter.value = "全部";
+      tagFilter.value = "全部";
+      minPriceInput.value = "";
+      maxPriceInput.value = "";
+      sortSelect.value = "newest";
+      renderProducts();
+    }
 
     searchInput.addEventListener("input", renderProducts);
+    categoryFilter.addEventListener("change", renderProducts);
+    tagFilter.addEventListener("change", renderProducts);
+    minPriceInput.addEventListener("input", renderProducts);
+    maxPriceInput.addEventListener("input", renderProducts);
+    sortSelect.addEventListener("change", renderProducts);
+    resetFilters.addEventListener("click", resetAllFilters);
 
-    document.getElementById("contactForm").addEventListener("submit", function(event) {
+    document.getElementById("contactForm").addEventListener("submit", function (event) {
       event.preventDefault();
 
       const name = document.getElementById("name").value.trim();
@@ -857,13 +1270,19 @@
       const message = document.getElementById("message").value.trim();
 
       const subject = "網站商品查詢";
-      const body = `名字：${name}%0AEmail：${email}%0A內容：${message}`;
+      const body = `
+名字：${name}
+Email：${email}
+內容：${message}
+      `;
 
-      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+      window.location.href =
+        `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    setupFilters();
     renderProducts();
   </script>
 </body>
