@@ -1,141 +1,870 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的網店</title>
-    <!-- 引入 Tailwind CSS 讓樣式好看 -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>商品展示網站 | Your Shop</title>
+  <meta name="description" content="精選商品展示網站，支援 WhatsApp 查詢與 Email 聯絡。" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --card-2: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-dark: #0284c7;
+      --accent: #22c55e;
+      --danger: #fb7185;
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.25), transparent 35%),
+        radial-gradient(circle at top right, rgba(34,197,94,0.16), transparent 30%),
+        linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(2,6,23,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 10px 30px rgba(56,189,248,0.3);
+      display: grid;
+      place-items: center;
+      color: #020617;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(14,165,233,0.25);
+    }
+
+    .hero {
+      padding: 80px 0 60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: #bae6fd;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 7vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 660px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.13);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: none;
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border: none;
+    }
+
+    .hero-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      background: rgba(255,255,255,0.07);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -80px -80px auto auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(56,189,248,0.2);
+      filter: blur(8px);
+    }
+
+    .mock-product {
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(56,189,248,0.7), rgba(34,197,94,0.55)),
+        radial-gradient(circle, rgba(255,255,255,0.4), transparent 45%);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      font-size: 28px;
+      font-weight: 900;
+      padding: 24px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .stat {
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.65);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 20px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    section {
+      padding: 60px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -1px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      color: white;
+      background: rgba(56,189,248,0.18);
+      border-color: rgba(56,189,248,0.45);
+    }
+
+    .search-box {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .search-box input::placeholder {
+      color: #64748b;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .product-card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+      transition: 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(56,189,248,0.45);
+    }
+
+    .product-img {
+      aspect-ratio: 1 / 1;
+      background:
+        linear-gradient(135deg, rgba(56,189,248,0.25), rgba(34,197,94,0.2)),
+        #1e293b;
+      display: grid;
+      place-items: center;
+      color: #cbd5e1;
+      font-weight: 800;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(2,6,23,0.72);
+      color: #bae6fd;
+      font-size: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .product-body {
+      padding: 16px;
+    }
+
+    .product-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .product-desc {
+      color: var(--muted);
+      font-size: 14px;
+      min-height: 44px;
+      margin-bottom: 12px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 900;
+      color: #e0f2fe;
+    }
+
+    .stock {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .product-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .small-btn {
+      padding: 10px 12px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+    }
+
+    .small-btn:hover {
+      background: rgba(255,255,255,0.13);
+    }
+
+    .small-btn.whatsapp {
+      background: rgba(34,197,94,0.18);
+      border-color: rgba(34,197,94,0.35);
+      color: #bbf7d0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.07);
+      padding: 22px;
+    }
+
+    .info-card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .info-card p,
+    .info-card li {
+      color: var(--muted);
+    }
+
+    .info-card ul {
+      padding-left: 20px;
+    }
+
+    .contact {
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 8px);
+      padding: 32px;
+      background:
+        linear-gradient(135deg, rgba(56,189,248,0.12), rgba(34,197,94,0.10)),
+        rgba(255,255,255,0.07);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .contact h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      margin-bottom: 12px;
+    }
+
+    .contact p {
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(2,6,23,0.45);
+      color: white;
+      outline: none;
+      font-size: 15px;
+      font-family: inherit;
+    }
+
+    .contact-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--muted);
+      padding: 40px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        height: auto;
+        padding: 14px 0;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 50px;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .contact {
+        padding: 22px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
 
-    <!-- 導覽列 -->
-    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-gray-800">🛍️ 我的精選網店</h1>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#">
+        <div class="logo">S</div>
         <div>
-            <button onclick="switchTab('shop')" id="btn-shop" class="px-4 py-2 bg-blue-600 text-white rounded-lg mr-2 font-medium">商店首頁</button>
-            <button onclick="switchTab('admin')" id="btn-admin" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium">管理員上架</button>
+          <div>Your Shop</div>
+          <small style="color: var(--muted); font-weight: 500;">商品展示目錄</small>
         </div>
-    </nav>
+      </a>
 
-    <!-- 主要內容區 -->
-    <main class="max-w-6xl mx-auto p-6">
-        
-        <!-- 1. 商店首頁：商品陳列 -->
-        <section id="shop-section">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">精選貨品</h2>
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- 商品會透過 JavaScript 動態載入這裡 -->
+      <nav class="nav-links">
+        <a href="#products">商品</a>
+        <a href="#about">關於</a>
+        <a href="#contact">聯絡</a>
+        <a class="nav-cta" href="#products">查看商品</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">✨ GitHub Pages 商品展示網站</div>
+          <h1>簡潔、美觀、容易更新的商品目錄</h1>
+          <p>
+            這是一個適合小型商店、工作室、手作產品或機械零件展示的網站。
+            現階段以商品陳列和 WhatsApp 查詢為主，未來可升級購物車、會員與線上付款。
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#products">瀏覽商品</a>
+            <a class="btn btn-whatsapp" href="https://wa.me/885257052661?text=你好，我想查詢商品。" target="_blank" rel="noopener">
+              WhatsApp 查詢
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="mock-product">
+            Featured<br />Products
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>24/7</strong>
+              <span>隨時查看</span>
             </div>
-        </section>
+            <div class="stat">
+              <strong>0 元</strong>
+              <span>GitHub 成本</span>
+            </div>
+            <div class="stat">
+              <strong>V2</strong>
+              <span>可升級購物車</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- 2. 管理員頁面：Post 貨 -->
-        <section id="admin-section" class="hidden max-w-lg mx-auto bg-white p-6 rounded-xl shadow-md">
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">上架新商品</h2>
-            <form id="add-product-form" onsubmit="addProduct(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">商品名稱</label>
-                    <input type="text" id="p-name" required class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">價格 (HKD)</label>
-                    <input type="number" id="p-price" required class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">圖片網址 (Image URL)</label>
-                    <input type="url" id="p-image" required placeholder="https://example.com/image.jpg" class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">商品描述</label>
-                    <textarea id="p-desc" rows="3" class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700">確認上架</button>
+    <section id="products">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>商品陳列</h2>
+            <p>你可以直接在 HTML 裡修改商品資料，或者之後改成讀取 products.json。</p>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <input id="searchInput" type="search" placeholder="搜尋商品名稱、分類或描述..." />
+        </div>
+
+        <div class="filters">
+          <button class="filter-btn active" data-category="全部">全部</button>
+          <button class="filter-btn" data-category="熱賣">熱賣</button>
+          <button class="filter-btn" data-category="新品">新品</button>
+          <button class="filter-btn" data-category="零件">零件</button>
+          <button class="filter-btn" data-category="套件">套件</button>
+        </div>
+
+        <div id="productGrid" class="products"></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>下一階段可升級功能</h2>
+            <p>先用靜態展示網站驗證需求，之後再逐步加入交易功能。</p>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>購物車</h3>
+            <p>可以先做前端購物車，讓客人選好商品後用 WhatsApp 發送訂單內容。</p>
+          </div>
+
+          <div class="info-card">
+            <h3>付款</h3>
+            <p>之後可接 Stripe、PayPal、PayMe 或 FPS。不要自行儲存信用卡資料。</p>
+          </div>
+
+          <div class="info-card">
+            <h3>會員</h3>
+            <p>建議使用 Firebase Auth 或 Supabase Auth，不要自己寫密碼系統。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact">
+          <div class="contact-grid">
+            <div>
+              <h2>想查詢商品？</h2>
+              <p>
+                你可以把這個表單暫時改成 EmailJS、Formspree 或 Google Forms。
+                現在範本會用 mailto 開啟電郵。
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn btn-whatsapp" href="https://wa.me/85212345678?text=你好，我想查詢商品。" target="_blank" rel="noopener">
+                  WhatsApp 聯絡
+                </a>
+                <a class="btn" href="mailto:your@email.com?subject=商品查詢&body=你好，我想查詢商品。">
+                  Email 查詢
+                </a>
+              </div>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+              <input id="name" type="text" placeholder="你的名字" />
+              <input id="email" type="email" placeholder="你的 Email" />
+              <textarea id="message" placeholder="想查詢什麼商品？"></textarea>
+              <button class="btn btn-primary" type="submit">送出查詢</button>
             </form>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    </main>
+  <footer>
+    © <span id="year"></span> Your Shop. All rights reserved. | Hosted on GitHub Pages
+  </footer>
 
-    <!-- JavaScript 邏輯 -->
-    <script>
-        // 預設的初始商品（如果沒有 LocalStorage 資料時使用）
-        const defaultProducts = [
-            { id: 1, name: "質感潮流公仔", price: 299, image: "https://images.unsplash.com/photo-1563089145-599997674d42?w=500", desc: "精緻做工，收藏首選。" },
-            { id: 2, name: "日系簡約托特包", price: 150, image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500", desc: "耐裝、好看、日常百搭。" }
-        ];
+  <script>
+    const whatsappNumber = "85257052661";
+    const contactEmail = "cash2ioy@gmail.com";
 
-        // 取得商品清單（優先從瀏覽器暫存讀取）
-        function getProducts() {
-            const stored = localStorage.getItem('my_store_products');
-            return stored ? JSON.parse(stored) : defaultProducts;
-        }
+    const products = [
+      {
+        id: "P001",
+        name: "JH #30",
+        category: "套件",
+        tag: "熱賣",
+        price: "HKD 280",
+        stock: "現貨",
+        image: "images/product-001.jpg",
+        desc: "適合 4DOF 機械臂的 3D 列印三指同步夾爪。"
+      },
+      {
+        id: "P002",
+        name: "DS3218 高扭力舵機",
+        category: "零件",
+        tag: "新品",
+        price: "HKD 95",
+        stock: "現貨",
+        image: "images/product-002.jpg",
+        desc: "適合機械臂、夾爪和機械車使用的高扭力金屬齒舵機。"
+      },
+      {
+        id: "P003",
+        name: "PCA9685 舵機控制板",
+        category: "零件",
+        tag: "熱賣",
+        price: "HKD 45",
+        stock: "少量",
+        image: "images/product-003.jpg",
+        desc: "16 路 PWM 舵機控制板，適合 ESP32、Arduino 專案。"
+      },
+      {
+        id: "P004",
+        name: "機械臂 4DOF 基礎套件",
+        category: "套件",
+        tag: "新品",
+        price: "HKD 520",
+        stock: "預訂",
+        image: "images/product-004.jpg",
+        desc: "包含基本機械臂結構、舵機固定座與夾爪安裝位。"
+      }
+    ];
 
-        // 渲染商品到網頁上
-        function renderProducts() {
-            const grid = document.getElementById('product-grid');
-            const products = getProducts();
-            grid.innerHTML = '';
+    let currentCategory = "全部";
 
-            products.forEach(p => {
-                grid.innerHTML += `
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col justify-between">
-                        <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
-                        <div class="p-4 flex-1 flex flex-col justify-between">
-                            <div>
-                                <h3 class="font-bold text-lg text-gray-800">${p.name}</h3>
-                                <p class="text-gray-600 text-sm mt-1">${p.desc}</p>
-                            </div>
-                            <div class="mt-4 flex items-center justify-between">
-                                <span class="text-xl font-bold text-red-600">HK$ ${p.price}</span>
-                                <button onclick="alert('已加入查詢！(未來可改為購物車)')" class="px-3 py-1 bg-gray-900 text-white text-sm rounded-lg hover:bg-gray-800">查看詳情</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+    const productGrid = document.getElementById("productGrid");
+    const searchInput = document.getElementById("searchInput");
+    const filterButtons = document.querySelectorAll(".filter-btn");
 
-        // 切換頁面分頁 (商店 / 管理員)
-        function switchTab(tab) {
-            const shopSec = document.getElementById('shop-section');
-            const adminSec = document.getElementById('admin-section');
-            const btnShop = document.getElementById('btn-shop');
-            const btnAdmin = document.getElementById('btn-admin');
+    function createWhatsAppLink(product) {
+      const text = `你好，我想查詢商品：${product.name}（${product.id}），價格：${product.price}`;
+      return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+    }
 
-            if (tab === 'shop') {
-                shopSec.classList.remove('hidden');
-                adminSec.classList.add('hidden');
-                btnShop.className = "px-4 py-2 bg-blue-600 text-white rounded-lg mr-2 font-medium";
-                btnAdmin.className = "px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium";
-                renderProducts();
-            } else {
-                shopSec.classList.add('hidden');
-                adminSec.classList.remove('hidden');
-                btnAdmin.className = "px-4 py-2 bg-blue-600 text-white rounded-lg mr-2 font-medium";
-                btnShop.className = "px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium";
-            }
-        }
+    function renderProducts() {
+      const keyword = searchInput.value.trim().toLowerCase();
 
-        // 新增商品功能
-        function addProduct(event) {
-            event.preventDefault();
-            const name = document.getElementById('p-name').value;
-            const price = Number(document.getElementById('p-price').value);
-            const image = document.getElementById('p-image').value;
-            const desc = document.getElementById('p-desc').value;
+      const filtered = products.filter(product => {
+        const matchCategory =
+          currentCategory === "全部" ||
+          product.category === currentCategory ||
+          product.tag === currentCategory;
 
-            const products = getProducts();
-            const newProduct = { id: Date.now(), name, price, image, desc };
-            
-            products.unshift(newProduct); // 放到最前面
-            localStorage.setItem('my_store_products', JSON.stringify(products));
+        const content = `${product.name} ${product.category} ${product.tag} ${product.desc} ${product.id}`.toLowerCase();
+        const matchKeyword = content.includes(keyword);
 
-            alert('商品上架成功！');
-            document.getElementById('add-product-form').reset();
-            switchTab('shop'); // 自動切回首頁查看
-        }
+        return matchCategory && matchKeyword;
+      });
 
-        // 初始化載入
+      productGrid.innerHTML = "";
+
+      if (filtered.length === 0) {
+        productGrid.innerHTML = `<div class="empty">找不到相關商品。</div>`;
+        return;
+      }
+
+      filtered.forEach(product => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+
+        card.innerHTML = `
+          <div class="product-img">
+            <span class="tag">${product.tag}</span>
+            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div>${product.name}</div>');" />
+          </div>
+          <div class="product-body">
+            <div class="product-title">${product.name}</div>
+            <div class="product-desc">${product.desc}</div>
+            <div class="price-row">
+              <div class="price">${product.price}</div>
+              <div class="stock">${product.stock}</div>
+            </div>
+            <div class="product-actions">
+              <a class="small-btn whatsapp" href="${createWhatsAppLink(product)}" target="_blank" rel="noopener">
+                WhatsApp 查詢
+              </a>
+              <a class="small-btn" href="mailto:${contactEmail}?subject=商品查詢：${encodeURIComponent(product.name)}&body=${encodeURIComponent("你好，我想查詢商品：" + product.name + "（" + product.id + "）")}">
+                Email 查詢
+              </a>
+            </div>
+          </div>
+        `;
+
+        productGrid.appendChild(card);
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        currentCategory = button.dataset.category;
         renderProducts();
-    </script>
+      });
+    });
+
+    searchInput.addEventListener("input", renderProducts);
+
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const subject = "網站商品查詢";
+      const body = `名字：${name}%0AEmail：${email}%0A內容：${message}`;
+
+      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    renderProducts();
+  </script>
 </body>
 </html>
