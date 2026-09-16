@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的網店</title>
+    <!-- 引入 Tailwind CSS 讓樣式好看 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- 導覽列 -->
+    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-gray-800">🛍️ 我的精選網店</h1>
+        <div>
+            <button onclick="switchTab('shop')" id="btn-shop" class="px-4 py-2 bg-blue-600 text-white rounded-lg mr-2 font-medium">商店首頁</button>
+            <button onclick="switchTab('admin')" id="btn-admin" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium">管理員上架</button>
+        </div>
+    </nav>
+
+    <!-- 主要內容區 -->
+    <main class="max-w-6xl mx-auto p-6">
+        
+        <!-- 1. 商店首頁：商品陳列 -->
+        <section id="shop-section">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">精選貨品</h2>
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- 商品會透過 JavaScript 動態載入這裡 -->
+            </div>
+        </section>
+
+        <!-- 2. 管理員頁面：Post 貨 -->
+        <section id="admin-section" class="hidden max-w-lg mx-auto bg-white p-6 rounded-xl shadow-md">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">上架新商品</h2>
+            <form id="add-product-form" onsubmit="addProduct(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">商品名稱</label>
+                    <input type="text" id="p-name" required class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">價格 (HKD)</label>
+                    <input type="number" id="p-price" required class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">圖片網址 (Image URL)</label>
+                    <input type="url" id="p-image" required placeholder="https://example.com/image.jpg" class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">商品描述</label>
+                    <textarea id="p-desc" rows="3" class="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700">確認上架</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // 預設的初始商品（如果沒有 LocalStorage 資料時使用）
+        const defaultProducts = [
+            { id: 1, name: "質感潮流公仔", price: 299, image: "https://images.unsplash.com/photo-1563089145-599997674d42?w=500", desc: "精緻做工，收藏首選。" },
+            { id: 2, name: "日系簡約托特包", price: 150, image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=500", desc: "耐裝、好看、日常百搭。" }
+        ];
+
+        // 取得商品清單（優先從瀏覽器暫存讀取）
+        function getProducts() {
+            const stored = localStorage.getItem('my_store_products');
+            return stored ? JSON.parse(stored) : defaultProducts;
+        }
+
+        // 渲染商品到網頁上
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const products = getProducts();
+            grid.innerHTML = '';
+
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col justify-between">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
+                        <div class="p-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-gray-800">${p.name}</h3>
+                                <p class="text-gray-600 text-sm mt-1">${p.desc}</p>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-xl font-bold text-red-600">HK$ ${p.price}</span>
+                                <button onclick="alert('已加入查詢！(未來可改為購物車)')" class="px-3 py-1 bg-gray-900 text-white text-sm rounded-lg hover:bg-gray-800">查看詳情</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // 切換頁面分頁 (商店 / 管理員)
+        function switchTab(tab) {
+            const shopSec = document.getElementById('shop-section');
+            const adminSec = document.getElementById('admin-section');
+            const btnShop = document.getElementById('btn-shop');
+            const btnAdmin = document.getElementById('btn-admin');
+
+            if (tab === 'shop') {
+                shopSec.classList.remove('hidden');
+                adminSec.classList.add('hidden');
+                btnShop.className = "px-4 py-2 bg-blue-600 text-white rounded-lg mr-2 font-medium";
+                btnAdmin.className = "px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium";
+                renderProducts();
+            } else {
+                shopSec.classList.add('hidden');
+                adminSec.classList.remove('hidden');
+                btnAdmin.className = "px-4 py-2 bg-blue-600 text-white rounded-lg mr-2 font-medium";
+                btnShop.className = "px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium";
+            }
+        }
+
+        // 新增商品功能
+        function addProduct(event) {
+            event.preventDefault();
+            const name = document.getElementById('p-name').value;
+            const price = Number(document.getElementById('p-price').value);
+            const image = document.getElementById('p-image').value;
+            const desc = document.getElementById('p-desc').value;
+
+            const products = getProducts();
+            const newProduct = { id: Date.now(), name, price, image, desc };
+            
+            products.unshift(newProduct); // 放到最前面
+            localStorage.setItem('my_store_products', JSON.stringify(products));
+
+            alert('商品上架成功！');
+            document.getElementById('add-product-form').reset();
+            switchTab('shop'); // 自動切回首頁查看
+        }
+
+        // 初始化載入
+        renderProducts();
+    </script>
+</body>
+</html>
