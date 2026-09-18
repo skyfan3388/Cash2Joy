@@ -1,1241 +1,438 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>商品展示網站</title>
-
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --surface-soft: #f1f5f9;
-      --text: #1e293b;
-      --muted: #64748b;
-      --primary: #2563eb;
-      --primary-light: #dbeafe;
-      --accent: #16a34a;
-      --accent-light: #dcfce7;
-      --border: #e2e8f0;
-      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-      --radius: 22px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
-        "Microsoft JhengHei", Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, #e0f2fe 0, transparent 34%),
-        radial-gradient(circle at top right, #dcfce7 0, transparent 28%),
-        var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      min-height: 100vh;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font-family: inherit;
-    }
-
-    .container {
-      width: min(1180px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 10px 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 900;
-    }
-
-    .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #60a5fa, #34d399);
-      color: #ffffff;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.18);
-    }
-
-    .brand small {
-      display: block;
-      color: var(--muted);
-      font-weight: 500;
-      font-size: 13px;
-      margin-top: -4px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      color: var(--muted);
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary);
-    }
-
-    .nav-cta {
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: var(--primary);
-      color: #ffffff !important;
-      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2);
-    }
-
-    .hero {
-      padding: 74px 0 44px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 42px;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 22px;
-    }
-
-    h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      line-height: 1.08;
-      letter-spacing: -2px;
-      margin-bottom: 22px;
-      color: #0f172a;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: var(--muted);
-      max-width: 640px;
-      margin-bottom: 30px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 13px 18px;
-      border-radius: 14px;
-      font-weight: 800;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      cursor: pointer;
-      transition: 0.2s ease;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.1);
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
-
-    .btn-whatsapp {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
-    }
-
-    .hero-card {
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid var(--border);
-      border-radius: 32px;
-      padding: 22px;
-      box-shadow: var(--shadow);
-    }
-
-    .featured-image {
-      aspect-ratio: 1 / 1;
-      border-radius: 24px;
-      background:
-        linear-gradient(135deg, rgba(219, 234, 254, 0.95), rgba(220, 252, 231, 0.95)),
-        #ffffff;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 24px;
-      color: #1e40af;
-      font-size: 30px;
-      font-weight: 900;
-      border: 1px solid #dbeafe;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .stat {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 14px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 20px;
-      color: #0f172a;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    section {
-      padding: 54px 0;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 26px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(28px, 4vw, 42px);
-      line-height: 1.15;
-      color: #0f172a;
-      margin-bottom: 8px;
-    }
-
-    .section-head p {
-      color: var(--muted);
-      max-width: 620px;
-    }
-
-    .product-panel {
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 20px;
-      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
-      margin-bottom: 24px;
-    }
-
-    .search-main {
-      margin-bottom: 16px;
-    }
-
-    .search-main label,
-    .filter-group label {
-      display: block;
-      color: #334155;
-      font-size: 14px;
-      font-weight: 800;
-      margin-bottom: 7px;
-    }
-
-    .search-main input {
-      width: 100%;
-      padding: 16px 17px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--text);
-      outline: none;
-      font-size: 16px;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.04);
-    }
-
-    .filter-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr 1fr 1fr 1fr auto;
-      gap: 12px;
-      align-items: end;
-    }
-
-    .filter-group select,
-    .filter-group input {
-      width: 100%;
-      padding: 13px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--text);
-      outline: none;
-      font-size: 15px;
-      min-height: 48px;
-    }
-
-    .search-main input:focus,
-    .filter-group select:focus,
-    .filter-group input:focus {
-      border-color: #93c5fd;
-      box-shadow: 0 0 0 4px rgba(147, 197, 253, 0.28);
-    }
-
-    .reset-btn {
-      min-height: 48px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: 1px solid #bfdbfe;
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 900;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .result-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 18px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .result-row strong {
-      color: #0f172a;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
-    .product-card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
-      transition: 0.2s ease;
-    }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 22px 44px rgba(15, 23, 42, 0.11);
-    }
-
-    .product-image {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      background:
-        linear-gradient(135deg, #eff6ff, #f0fdf4);
-      display: grid;
-      place-items: center;
-      color: #2563eb;
-      font-weight: 900;
-      text-align: center;
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.92);
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      font-size: 12px;
-      font-weight: 800;
-      z-index: 2;
-    }
-
-    .product-body {
-      padding: 17px;
-    }
-
-    .product-title {
-      font-size: 17px;
-      font-weight: 900;
-      color: #0f172a;
-      margin-bottom: 6px;
-    }
-
-    .product-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .meta-pill {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 4px 8px;
-    }
-
-    .product-desc {
-      min-height: 48px;
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 14px;
-    }
-
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .price {
-      color: #1d4ed8;
-      font-size: 21px;
-      font-weight: 900;
-    }
-
-    .stock {
-      color: #15803d;
-      background: var(--accent-light);
-      padding: 4px 9px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .product-actions {
-      display: grid;
-      gap: 9px;
-    }
-
-    .small-btn {
-      display: block;
-      text-align: center;
-      padding: 10px 12px;
-      border-radius: 13px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      font-weight: 800;
-      font-size: 14px;
-      transition: 0.2s ease;
-    }
-
-    .small-btn:hover {
-      background: var(--surface-soft);
-    }
-
-    .small-btn.whatsapp {
-      background: #dcfce7;
-      border-color: #bbf7d0;
-      color: #15803d;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .info-card {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
-    }
-
-    .info-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: var(--primary-light);
-      color: #1d4ed8;
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-      margin-bottom: 14px;
-    }
-
-    .info-card h3 {
-      color: #0f172a;
-      margin-bottom: 8px;
-      font-size: 20px;
-    }
-
-    .info-card p {
-      color: var(--muted);
-    }
-
-    .contact-box {
-      background:
-        linear-gradient(135deg, rgba(219, 234, 254, 0.9), rgba(220, 252, 231, 0.9)),
-        #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 32px;
-      padding: 34px;
-      box-shadow: var(--shadow);
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      align-items: center;
-    }
-
-    .contact-box h2 {
-      font-size: clamp(28px, 4vw, 42px);
-      line-height: 1.15;
-      color: #0f172a;
-      margin-bottom: 12px;
-    }
-
-    .contact-box p {
-      color: var(--muted);
-      margin-bottom: 22px;
-    }
-
-    .contact-form {
-      display: grid;
-      gap: 12px;
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 14px 15px;
-      border-radius: 15px;
-      border: 1px solid #cbd5e1;
-      background: rgba(255, 255, 255, 0.88);
-      color: var(--text);
-      outline: none;
-      font-size: 15px;
-      font-family: inherit;
-    }
-
-    .contact-form textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    footer {
-      padding: 34px 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      border-top: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.65);
-    }
-
-    .empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 42px;
-      border: 1px dashed #cbd5e1;
-      border-radius: var(--radius);
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    @media (max-width: 1100px) {
-      .products {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .filter-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .reset-btn {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 860px) {
-      .hero-grid,
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .filter-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        width: min(100% - 24px, 1180px);
-      }
-
-      .nav {
-        min-height: auto;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding: 46px 0 30px;
-      }
-
-      h1 {
-        letter-spacing: -1px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
-
-      .hero-actions {
-        display: grid;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .products {
-        grid-template-columns: 1fr;
-      }
-
-      .filter-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .section-head {
-        display: block;
-      }
-
-      .contact-box {
-        padding: 24px;
-      }
-
-      .result-row {
-        display: block;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#">
-        <div class="logo">S</div>
-        <div>
-          Your Shop
-          <small>商品展示目錄</small>
-        </div>
-      </a>
-
-      <nav class="nav-links">
-        <a href="#products">商品</a>
-        <a href="#about">特色</a>
-        <a href="#contact">聯絡</a>
-        <a class="nav-cta" href="#products">查看商品</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="badge">✨ 精選商品展示</div>
-          <h1>簡潔美觀的商品目錄網站</h1>
+<section class="section" id="categories">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">Categories</div>
+          <h2>熱門分類</h2>
           <p>
-            適合商品展示、報價查詢、作品目錄或小型商店頁面。
-            支援搜尋、分類、價錢篩選、時間排序和 WhatsApp 查詢。
+            你可以根據不同收藏分類查詢貨品，亦可以直接 WhatsApp 我哋搵指定款式。
           </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#products">瀏覽商品</a>
-            <a
-              class="btn btn-whatsapp"
-              href="https://wa.me/85212345678?text=你好，我想查詢商品。"
-              target="_blank"
-              rel="noopener"
-            >
-              WhatsApp 查詢
-            </a>
-          </div>
         </div>
 
-        <div class="hero-card">
-          <div class="featured-image">
-            Product<br />
-            Finder
+        <div class="category-grid">
+          <div class="category-card">
+            <div class="cat-icon">🃏</div>
+            <h3>收藏卡</h3>
+            <p>Pokemon、One Piece、NBA、遊戲王等熱門收藏卡。</p>
           </div>
 
-          <div class="stats">
-            <div class="stat">
-              <strong>搜尋</strong>
-              <span>快速找貨</span>
-            </div>
-            <div class="stat">
-              <strong>篩選</strong>
-              <span>價錢 / 時間</span>
-            </div>
-            <div class="stat">
-              <strong>新增</strong>
-              <span>只改資料</span>
-            </div>
+          <div class="category-card">
+            <div class="cat-icon">🎮</div>
+            <h3>遊戲精品</h3>
+            <p>主機、遊戲週邊、限定版收藏及二手好物。</p>
+          </div>
+
+          <div class="category-card">
+            <div class="cat-icon">🧸</div>
+            <h3>潮流玩具</h3>
+            <p>盲盒、公仔、模型、限量聯乘及潮玩收藏。</p>
+          </div>
+
+          <div class="category-card">
+            <div class="cat-icon">⌚</div>
+            <h3>生活好物</h3>
+            <p>手錶、電子產品、小精品及其他精選二手物品。</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="products">
+    <section class="section products-section" id="products">
       <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>尋找貨物</h2>
+        <div class="product-top-row">
+          <div class="section-heading" style="margin-bottom: 0;">
+            <div class="section-kicker">Products</div>
+            <h2>貨物展示</h2>
             <p>
-              你可以用關鍵字搜尋商品，也可以按分類、狀態、價錢或上架時間篩選。
+              以下為示範貨品，你可以自行更改名稱、價錢、描述及圖片。
+              每件貨品都有獨立 WhatsApp 查詢訊息。
             </p>
           </div>
-        </div>
 
-        <div class="product-panel">
-          <div class="search-main">
-            <label for="searchInput">搜尋貨物</label>
-            <input
-              id="searchInput"
-              type="search"
-              placeholder="輸入商品名稱、編號、分類、描述，例如：P008 / 套件 / 新品"
-            />
-          </div>
-
-          <div class="filter-grid">
-            <div class="filter-group">
-              <label for="categoryFilter">分類</label>
-              <select id="categoryFilter">
-                <option value="全部">全部分類</option>
-              </select>
-            </div>
-
-            <div class="filter-group">
-              <label for="tagFilter">標籤</label>
-              <select id="tagFilter">
-                <option value="全部">全部標籤</option>
-              </select>
-            </div>
-
-            <div class="filter-group">
-              <label for="minPrice">最低價錢</label>
-              <input id="minPrice" type="number" min="0" placeholder="例如 100" />
-            </div>
-
-            <div class="filter-group">
-              <label for="maxPrice">最高價錢</label>
-              <input id="maxPrice" type="number" min="0" placeholder="例如 500" />
-            </div>
-
-            <div class="filter-group">
-              <label for="sortSelect">排序</label>
-              <select id="sortSelect">
-                <option value="newest">最新上架</option>
-                <option value="oldest">最舊上架</option>
-                <option value="priceLow">價錢：低至高</option>
-                <option value="priceHigh">價錢：高至低</option>
-                <option value="nameAZ">名稱：A 至 Z</option>
-              </select>
-            </div>
-
-            <button class="reset-btn" id="resetFilters" type="button">
-              重設
-            </button>
+          <div class="filter-pills">
+            <button class="filter-pill active" data-filter="all">全部</button>
+            <button class="filter-pill" data-filter="card">收藏卡</button>
+            <button class="filter-pill" data-filter="toy">潮玩</button>
+            <button class="filter-pill" data-filter="game">遊戲</button>
+            <button class="filter-pill" data-filter="goods">好物</button>
           </div>
         </div>
 
-        <div class="result-row">
-          <div>
-            找到 <strong id="resultCount">0</strong> 件貨物
-          </div>
-          <div>
-            提示：新增產品只需要修改 JavaScript 入面的 <strong>products</strong> 資料
-          </div>
-        </div>
-
-        <div id="productGrid" class="products"></div>
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>新增產品方式</h2>
-            <p>
-              不需要改 HTML 結構，只需要在 products 陣列新增一件商品資料。
-            </p>
-          </div>
-        </div>
-
-        <div class="about-grid">
-          <div class="info-card">
-            <div class="info-icon">➕</div>
-            <h3>簡單新增</h3>
-            <p>複製一段產品資料，改 ID、名稱、價錢、圖片和描述即可。</p>
-          </div>
-
-          <div class="info-card">
-            <div class="info-icon">🔍</div>
-            <h3>自動搜尋</h3>
-            <p>新加的產品會自動出現在搜尋和篩選功能，不需要另外設定。</p>
-          </div>
-
-          <div class="info-card">
-            <div class="info-icon">📱</div>
-            <h3>手機電腦適用</h3>
-            <p>版面會自動適應手機和平板電腦尺寸。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="contact-box">
-          <div class="contact-grid">
-            <div>
-              <h2>有興趣了解更多？</h2>
-              <p>
-                可透過 WhatsApp 或 Email 聯絡查詢商品、報價、庫存或訂購安排。
-              </p>
-
-              <div class="hero-actions">
+        <div class="product-grid" id="productGrid">
+          <article class="product-card" data-category="card">
+            <div class="product-media">
+              <span class="tag">收藏卡</span>
+              🃏
+            </div>
+            <div class="product-body">
+              <h3>Pokemon 收藏卡組合</h3>
+              <p>人氣卡款組合，適合新手收藏或進階玩家補齊卡冊。</p>
+              <div class="product-meta">
+                <span class="price">HK$380</span>
+                <span class="condition">狀態良好</span>
+              </div>
+              <div class="card-actions">
                 <a
-                  class="btn btn-whatsapp"
-                  href="https://wa.me/85212345678?text=你好，我想查詢商品。"
+                  class="btn btn-buy small-btn item-whatsapp"
+                  href="#"
                   target="_blank"
                   rel="noopener"
+                  data-product="Pokemon 收藏卡組合"
+                  data-price="HK$380"
                 >
-                  WhatsApp 聯絡
+                  WhatsApp 問價
                 </a>
+                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
+              </div>
+            </div>
+          </article>
 
+          <article class="product-card" data-category="card">
+            <div class="product-media">
+              <span class="tag">收藏卡</span>
+              🏀
+            </div>
+            <div class="product-body">
+              <h3>NBA 球星卡精選</h3>
+              <p>熱門球星卡，適合收藏、展示或作為禮物。</p>
+              <div class="product-meta">
+                <span class="price">HK$520</span>
+                <span class="condition">近全新</span>
+              </div>
+              <div class="card-actions">
                 <a
-                  class="btn"
-                  href="mailto:your@email.com?subject=商品查詢&body=你好，我想查詢商品。"
+                  class="btn btn-buy small-btn item-whatsapp"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                  data-product="NBA 球星卡精選"
+                  data-price="HK$520"
                 >
-                  Email 查詢
+                  WhatsApp 問價
                 </a>
+                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="toy">
+            <div class="product-media">
+              <span class="tag">潮玩</span>
+              🧸
+            </div>
+            <div class="product-body">
+              <h3>限量潮流公仔</h3>
+              <p>熱門潮玩系列，擺設一流，收藏價值高。</p>
+              <div class="product-meta">
+                <span class="price">HK$680</span>
+                <span class="condition">有盒</span>
+              </div>
+              <div class="card-actions">
+                <a
+                  class="btn btn-buy small-btn item-whatsapp"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                  data-product="限量潮流公仔"
+                  data-price="HK$680"
+                >
+                  WhatsApp 問價
+                </a>
+                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="game">
+            <div class="product-media">
+              <span class="tag">遊戲</span>
+              🎮
+            </div>
+            <div class="product-body">
+              <h3>遊戲主機連手掣</h3>
+              <p>已測試功能正常，適合自用或送禮。</p>
+              <div class="product-meta">
+                <span class="price">HK$1,280</span>
+                <span class="condition">已測試</span>
+              </div>
+              <div class="card-actions">
+                <a
+                  class="btn btn-buy small-btn item-whatsapp"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                  data-product="遊戲主機連手掣"
+                  data-price="HK$1,280"
+                >
+                  WhatsApp 問價
+                </a>
+                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="toy">
+            <div class="product-media">
+              <span class="tag">潮玩</span>
+              🤖
+            </div>
+            <div class="product-body">
+              <h3>模型機械人收藏</h3>
+              <p>造型型格，適合模型迷或動漫收藏玩家。</p>
+              <div class="product-meta">
+                <span class="price">HK$450</span>
+                <span class="condition">展示品</span>
+              </div>
+              <div class="card-actions">
+                <a
+                  class="btn btn-buy small-btn item-whatsapp"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                  data-product="模型機械人收藏"
+                  data-price="HK$450"
+                >
+                  WhatsApp 問價
+                </a>
+                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-category="goods">
+            <div class="product-media">
+              <span class="tag">好物</span>
+              ⌚
+            </div>
+            <div class="product-body">
+              <h3>潮流手錶精品</h3>
+              <p>日常配襯易襯，外觀企理，適合年青人穿搭。</p>
+              <div class="product-meta">
+                <span class="price">HK$760</span>
+                <span class="condition">九成新</span>
+              </div>
+              <div class="card-actions">
+                <a
+                  class="btn btn-buy small-btn item-whatsapp"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                  data-product="潮流手錶精品"
+                  data-price="HK$760"
+                >
+                  WhatsApp 問價
+                </a>
+                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="more-products">
+          <h3>想搵其他貨？</h3>
+          <p>
+            如果網站暫時未見到你想要嘅貨品，可以直接 WhatsApp 我哋查詢指定款式。
+          </p>
+          <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
+            🛒 WhatsApp 查詢更多貨品
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sell-section" id="sell">
+      <div class="container sell-grid">
+        <div>
+          <div class="section-heading">
+            <div class="section-kicker">Sell With Us</div>
+            <h2>想賣嘢？我哋幫你處理</h2>
+            <p>
+              如果你有收藏卡、潮玩、遊戲產品或其他好物想放售，
+              可以先 WhatsApp 傳相及資料畀我哋初步了解。
+            </p>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <div>
+                <h3>傳相及資料</h3>
+                <p>提供物品相片、品牌、狀態、配件及你心目中嘅放售價。</p>
               </div>
             </div>
 
-            <form class="contact-form" id="contactForm">
-              <input id="name" type="text" placeholder="你的名字" />
-              <input id="email" type="email" placeholder="你的 Email" />
-              <textarea id="message" placeholder="想查詢什麼商品？"></textarea>
-              <button class="btn btn-primary" type="submit">送出查詢</button>
-            </form>
+            <div class="step">
+              <div class="step-num">02</div>
+              <div>
+                <h3>初步估價</h3>
+                <p>我哋會按市場需求、狀態及熱門程度作初步評估。</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">03</div>
+              <div>
+                <h3>安排寄賣 / 收購</h3>
+                <p>可按情況安排寄賣、代售或直接收購，流程清晰。</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-num">04</div>
+              <div>
+                <h3>成交及交收</h3>
+                <p>成功成交後會通知你，並安排收款或交收細節。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sell-panel">
+          <h3>放售前可以準備咩？</h3>
+          <p>
+            為咗加快估價，建議你 WhatsApp 時一次過提供以下資料：
+          </p>
+
+          <ul>
+            <li>物品正面、背面及細節相</li>
+            <li>品牌 / 型號 / 系列名稱</li>
+            <li>新舊程度、有冇盒、有冇配件</li>
+            <li>購入來源或相關證明，如有</li>
+            <li>你希望放售嘅價格範圍</li>
+          </ul>
+
+          <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
+            📦 WhatsApp 查詢放售
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div class="contact-info">
+            <div class="section-kicker">Contact</div>
+            <h2>即刻 WhatsApp 我哋</h2>
+            <p>
+              想查詢買嘢請按「想買」，想放售 / 寄賣請按「想賣」。
+              系統會自動帶入唔同訊息，方便我哋更快回覆你。
+            </p>
+
+            <div class="contact-actions">
+              <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
+                🛒 查詢買嘢
+              </a>
+
+              <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
+                📦 查詢賣嘢
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-boxes">
+            <div class="info-box">
+              <strong>服務範圍</strong>
+              <span>收藏卡、潮玩、遊戲精品、二手好物</span>
+            </div>
+
+            <div class="info-box">
+              <strong>查詢方式</strong>
+              <span>WhatsApp 快速查詢買賣及寄賣安排</span>
+            </div>
+
+            <div class="info-box">
+              <strong>交收安排</strong>
+              <span>可按實際情況商議面交、速遞或其他方式</span>
+            </div>
+
+            <div class="info-box">
+              <strong>提示</strong>
+              <span>貨品價格及存貨以 WhatsApp 最終確認為準</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    © <span id="year"></span> Your Shop. All rights reserved.
+  <div class="floating-actions">
+    <a href="#" class="floating-btn floating-buy whatsapp-buy" target="_blank" rel="noopener" aria-label="WhatsApp 查詢買嘢">
+      🛒
+    </a>
+
+    <a href="#" class="floating-btn floating-sell whatsapp-sell" target="_blank" rel="noopener" aria-label="WhatsApp 查詢賣嘢">
+      📦
+    </a>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      © 2026 Cash2Joy. All rights reserved.
+    </div>
   </footer>
 
   <script>
-    /*
-      ==================================================
-      你主要只需要修改這幾個地方
-      ==================================================
-    */
+    const WHATSAPP_NUMBER = "85291234567";
 
-    const whatsappNumber = "85257052661";
-    const contactEmail = "cash2joy@gmail.com";
+    const buyMessage = "你好，我想查詢 Cash2Joy 的貨品，想了解價格、狀態及交收方式。";
+    const sellMessage = "你好，我想放售收藏卡或物品，想查詢寄賣代售安排。";
 
-    /*
-      新增產品方法：
-
-      1. 複製下面其中一段產品資料
-      2. 改 id、name、category、tag、price、priceValue、stock、image、desc、date
-      3. 記得每件產品之間要有逗號 ,
-
-      欄位說明：
-      id          = 商品編號
-      name        = 商品名稱
-      category    = 分類，例如 套件 / 零件 / 配件
-      tag         = 標籤，例如 新品 / 熱賣 / 推薦
-      price       = 顯示用價錢文字
-      priceValue  = 數字價錢，用於價錢篩選和排序
-      stock       = 庫存狀態，例如 現貨 / 預訂 / 少量
-      image       = 圖片路徑
-      desc        = 商品描述
-      date        = 上架日期，格式必須是 YYYY-MM-DD
-    */
-
-    const products = [
-      {
-        id: "JH24",
-        name: "Juicy Honey Collection Cards PLUS #24",
-        category: "套件",
-        tag: "熱賣",
-        price: "HKD 1280",
-        priceValue: 1200,
-        stock: "現貨",
-        image: "images/JHP24.jpg",
-        desc: "這裡可以放商品簡介，例如用途、特色或尺寸。",
-        date: "2026-09-16"
-      },
-      {
-        id: "JH26",
-        name: "Juicy Honey Collection Cards PLUS #26"
-        category: "套件",
-        tag: "新品",
-        price: "HKD 1380",
-        priceValue: 1000,
-        stock: "現貨",
-        image: "images/JHP26.jpg",
-        desc: "這裡可以放商品簡介，例如適合什麼場合使用。",
-        date: "2026-09-12"
-      },
-      {
-        id: "JH28",
-        name: "Juicy Honey Collection Cards PLUS #28"
-        category: "套件",
-        tag: "新品",
-        price: "HKD 1380",
-        priceValue: 1000,
-        stock: "現貨",
-        image: "images/JHP28.jpg",
-        desc: "這裡可以放商品簡介，例如適合什麼場合使用。",
-        date: "2026-09-12"
-      },
-      {
-        id: "JH30",
-        name: "Juicy Honey Collection Cards PLUS #30"
-        category: "套件",
-        tag: "新品",
-        price: "HKD 1380",
-        priceValue: 1000,
-        stock: "現貨",
-        image: "images/JHP30.jpg",
-        desc: "這裡可以放商品簡介，例如適合什麼場合使用。",
-        date: "2026-09-12"
-      }
-    ];
-
-    /*
-      ==================================================
-      以下程式一般不需要修改
-      ==================================================
-    */
-
-    const productGrid = document.getElementById("productGrid");
-    const searchInput = document.getElementById("searchInput");
-    const categoryFilter = document.getElementById("categoryFilter");
-    const tagFilter = document.getElementById("tagFilter");
-    const minPriceInput = document.getElementById("minPrice");
-    const maxPriceInput = document.getElementById("maxPrice");
-    const sortSelect = document.getElementById("sortSelect");
-    const resetFilters = document.getElementById("resetFilters");
-    const resultCount = document.getElementById("resultCount");
-
-    function createWhatsAppLink(product) {
-      const text = `你好，我想查詢商品：${product.name}（${product.id}），價格：${product.price}`;
-      return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+    function whatsappLink(message) {
+      return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
     }
 
-    function createEmailLink(product) {
-      const subject = `商品查詢：${product.name}`;
-      const body = `你好，我想查詢商品：${product.name}（${product.id}），價格：${product.price}`;
-      return `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    }
-
-    function getUniqueValues(key) {
-      const values = products.map((product) => product[key]).filter(Boolean);
-      return [...new Set(values)];
-    }
-
-    function fillSelectOptions(selectElement, values, defaultText) {
-      selectElement.innerHTML = `<option value="全部">${defaultText}</option>`;
-
-      values.forEach((value) => {
-        const option = document.createElement("option");
-        option.value = value;
-        option.textContent = value;
-        selectElement.appendChild(option);
-      });
-    }
-
-    function setupFilters() {
-      fillSelectOptions(categoryFilter, getUniqueValues("category"), "全部分類");
-      fillSelectOptions(tagFilter, getUniqueValues("tag"), "全部標籤");
-    }
-
-    function getFilteredProducts() {
-      const keyword = searchInput.value.trim().toLowerCase();
-      const selectedCategory = categoryFilter.value;
-      const selectedTag = tagFilter.value;
-      const minPrice = Number(minPriceInput.value);
-      const maxPrice = Number(maxPriceInput.value);
-      const hasMinPrice = minPriceInput.value !== "";
-      const hasMaxPrice = maxPriceInput.value !== "";
-
-      let filtered = products.filter((product) => {
-        const searchContent = `
-          ${product.id}
-          ${product.name}
-          ${product.category}
-          ${product.tag}
-          ${product.price}
-          ${product.stock}
-          ${product.desc}
-          ${product.date}
-        `.toLowerCase();
-
-        const matchKeyword = searchContent.includes(keyword);
-
-        const matchCategory =
-          selectedCategory === "全部" || product.category === selectedCategory;
-
-        const matchTag =
-          selectedTag === "全部" || product.tag === selectedTag;
-
-        const matchMinPrice =
-          !hasMinPrice || product.priceValue >= minPrice;
-
-        const matchMaxPrice =
-          !hasMaxPrice || product.priceValue <= maxPrice;
-
-        return (
-          matchKeyword &&
-          matchCategory &&
-          matchTag &&
-          matchMinPrice &&
-          matchMaxPrice
-        );
-      });
-
-      const sortValue = sortSelect.value;
-
-      filtered.sort((a, b) => {
-        if (sortValue === "newest") {
-          return new Date(b.date) - new Date(a.date);
-        }
-
-        if (sortValue === "oldest") {
-          return new Date(a.date) - new Date(b.date);
-        }
-
-        if (sortValue === "priceLow") {
-          return a.priceValue - b.priceValue;
-        }
-
-        if (sortValue === "priceHigh") {
-          return b.priceValue - a.priceValue;
-        }
-
-        if (sortValue === "nameAZ") {
-          return a.name.localeCompare(b.name, "zh-Hant");
-        }
-
-        return 0;
-      });
-
-      return filtered;
-    }
-
-    function renderProducts() {
-      const filtered = getFilteredProducts();
-
-      resultCount.textContent = filtered.length;
-      productGrid.innerHTML = "";
-
-      if (filtered.length === 0) {
-        productGrid.innerHTML = `<div class="empty">找不到相關貨物，請嘗試更改搜尋字眼或篩選條件。</div>`;
-        return;
-      }
-
-      filtered.forEach((product) => {
-        const card = document.createElement("article");
-        card.className = "product-card";
-
-        card.innerHTML = `
-          <div class="product-image">
-            <span class="tag">${product.tag}</span>
-            <img
-              src="${product.image}"
-              alt="${product.name}"
-              onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend', '<div>${product.name}</div>');"
-            />
-          </div>
-
-          <div class="product-body">
-            <div class="product-title">${product.name}</div>
-
-            <div class="product-meta">
-              <span class="meta-pill">${product.id}</span>
-              <span class="meta-pill">${product.category}</span>
-              <span class="meta-pill">上架：${product.date}</span>
-            </div>
-
-            <div class="product-desc">${product.desc}</div>
-
-            <div class="price-row">
-              <div class="price">${product.price}</div>
-              <div class="stock">${product.stock}</div>
-            </div>
-
-            <div class="product-actions">
-              <a
-                class="small-btn whatsapp"
-                href="${createWhatsAppLink(product)}"
-                target="_blank"
-                rel="noopener"
-              >
-                WhatsApp 查詢
-              </a>
-
-              <a class="small-btn" href="${createEmailLink(product)}">
-                Email 查詢
-              </a>
-            </div>
-          </div>
-        `;
-
-        productGrid.appendChild(card);
-      });
-    }
-
-    function resetAllFilters() {
-      searchInput.value = "";
-      categoryFilter.value = "全部";
-      tagFilter.value = "全部";
-      minPriceInput.value = "";
-      maxPriceInput.value = "";
-      sortSelect.value = "newest";
-      renderProducts();
-    }
-
-    searchInput.addEventListener("input", renderProducts);
-    categoryFilter.addEventListener("change", renderProducts);
-    tagFilter.addEventListener("change", renderProducts);
-    minPriceInput.addEventListener("input", renderProducts);
-    maxPriceInput.addEventListener("input", renderProducts);
-    sortSelect.addEventListener("change", renderProducts);
-    resetFilters.addEventListener("click", resetAllFilters);
-
-    document.getElementById("contactForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-
-      const subject = "網站商品查詢";
-      const body = `
-名字：${name}
-Email：${email}
-內容：${message}
-      `;
-
-      window.location.href =
-        `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    document.querySelectorAll(".whatsapp-buy").forEach(function(link) {
+      link.href = whatsappLink(buyMessage);
     });
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    document.querySelectorAll(".whatsapp-sell").forEach(function(link) {
+      link.href = whatsappLink(sellMessage);
+    });
 
-    setupFilters();
-    renderProducts();
+    document.querySelectorAll(".item-whatsapp").forEach(function(link) {
+      const product = link.dataset.product || "貨品";
+      const price = link.dataset.price || "";
+      const message = "你好，我想查詢 Cash2Joy 的「" + product + "」" + (price ? "，標示價格為 " + price : "") + "，想了解貨品狀態、是否仍有現貨及交收方式。";
+      link.href = whatsappLink(message);
+    });
+
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    mobileMenuBtn.addEventListener("click", function() {
+      navLinks.classList.toggle("active");
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(function(link) {
+      link.addEventListener("click", function() {
+        navLinks.classList.remove("active");
+      });
+    });
+
+    const filterButtons = document.querySelectorAll(".filter-pill");
+    const productCards = document.querySelectorAll(".product-card");
+
+    filterButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach(function(btn) {
+          btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        productCards.forEach(function(card) {
+          const category = card.dataset.category;
+
+          if (filter === "all" || category === filter) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
