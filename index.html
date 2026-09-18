@@ -1,438 +1,1127 @@
-<section class="section" id="categories">
-      <div class="container">
-        <div class="section-heading">
-          <div class="section-kicker">Categories</div>
-          <h2>熱門分類</h2>
-          <p>
-            你可以根據不同收藏分類查詢貨品，亦可以直接 WhatsApp 我哋搵指定款式。
-          </p>
-        </div>
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <div class="category-grid">
-          <div class="category-card">
-            <div class="cat-icon">🃏</div>
-            <h3>收藏卡</h3>
-            <p>Pokemon、One Piece、NBA、遊戲王等熱門收藏卡。</p>
-          </div>
+  <title>Cash2Joy｜潮流收藏買賣・寄賣代售</title>
+  <meta
+    name="description"
+    content="Cash2Joy 專注收藏卡、潮流玩具、遊戲精品、二手好物買賣及寄賣代售服務。WhatsApp 快速查詢買嘢或賣嘢。"
+  />
 
-          <div class="category-card">
-            <div class="cat-icon">🎮</div>
-            <h3>遊戲精品</h3>
-            <p>主機、遊戲週邊、限定版收藏及二手好物。</p>
-          </div>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --dark: #111827;
+      --text: #1f2937;
+      --muted: #64748b;
+      --white: #ffffff;
 
-          <div class="category-card">
-            <div class="cat-icon">🧸</div>
-            <h3>潮流玩具</h3>
-            <p>盲盒、公仔、模型、限量聯乘及潮玩收藏。</p>
-          </div>
+      --pink: #ff4ecd;
+      --pink-dark: #db27a8;
+      --purple: #7c3aed;
+      --purple-dark: #5b21b6;
+      --blue: #38bdf8;
+      --mint: #34d399;
+      --yellow: #facc15;
+      --orange: #fb923c;
 
-          <div class="category-card">
-            <div class="cat-icon">⌚</div>
-            <h3>生活好物</h3>
-            <p>手錶、電子產品、小精品及其他精選二手物品。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section products-section" id="products">
-      <div class="container">
-        <div class="product-top-row">
-          <div class="section-heading" style="margin-bottom: 0;">
-            <div class="section-kicker">Products</div>
-            <h2>貨物展示</h2>
-            <p>
-              以下為示範貨品，你可以自行更改名稱、價錢、描述及圖片。
-              每件貨品都有獨立 WhatsApp 查詢訊息。
-            </p>
-          </div>
-
-          <div class="filter-pills">
-            <button class="filter-pill active" data-filter="all">全部</button>
-            <button class="filter-pill" data-filter="card">收藏卡</button>
-            <button class="filter-pill" data-filter="toy">潮玩</button>
-            <button class="filter-pill" data-filter="game">遊戲</button>
-            <button class="filter-pill" data-filter="goods">好物</button>
-          </div>
-        </div>
-
-        <div class="product-grid" id="productGrid">
-          <article class="product-card" data-category="card">
-            <div class="product-media">
-              <span class="tag">收藏卡</span>
-              🃏
-            </div>
-            <div class="product-body">
-              <h3>Pokemon 收藏卡組合</h3>
-              <p>人氣卡款組合，適合新手收藏或進階玩家補齊卡冊。</p>
-              <div class="product-meta">
-                <span class="price">HK$380</span>
-                <span class="condition">狀態良好</span>
-              </div>
-              <div class="card-actions">
-                <a
-                  class="btn btn-buy small-btn item-whatsapp"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  data-product="Pokemon 收藏卡組合"
-                  data-price="HK$380"
-                >
-                  WhatsApp 問價
-                </a>
-                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="card">
-            <div class="product-media">
-              <span class="tag">收藏卡</span>
-              🏀
-            </div>
-            <div class="product-body">
-              <h3>NBA 球星卡精選</h3>
-              <p>熱門球星卡，適合收藏、展示或作為禮物。</p>
-              <div class="product-meta">
-                <span class="price">HK$520</span>
-                <span class="condition">近全新</span>
-              </div>
-              <div class="card-actions">
-                <a
-                  class="btn btn-buy small-btn item-whatsapp"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  data-product="NBA 球星卡精選"
-                  data-price="HK$520"
-                >
-                  WhatsApp 問價
-                </a>
-                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="toy">
-            <div class="product-media">
-              <span class="tag">潮玩</span>
-              🧸
-            </div>
-            <div class="product-body">
-              <h3>限量潮流公仔</h3>
-              <p>熱門潮玩系列，擺設一流，收藏價值高。</p>
-              <div class="product-meta">
-                <span class="price">HK$680</span>
-                <span class="condition">有盒</span>
-              </div>
-              <div class="card-actions">
-                <a
-                  class="btn btn-buy small-btn item-whatsapp"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  data-product="限量潮流公仔"
-                  data-price="HK$680"
-                >
-                  WhatsApp 問價
-                </a>
-                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="game">
-            <div class="product-media">
-              <span class="tag">遊戲</span>
-              🎮
-            </div>
-            <div class="product-body">
-              <h3>遊戲主機連手掣</h3>
-              <p>已測試功能正常，適合自用或送禮。</p>
-              <div class="product-meta">
-                <span class="price">HK$1,280</span>
-                <span class="condition">已測試</span>
-              </div>
-              <div class="card-actions">
-                <a
-                  class="btn btn-buy small-btn item-whatsapp"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  data-product="遊戲主機連手掣"
-                  data-price="HK$1,280"
-                >
-                  WhatsApp 問價
-                </a>
-                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="toy">
-            <div class="product-media">
-              <span class="tag">潮玩</span>
-              🤖
-            </div>
-            <div class="product-body">
-              <h3>模型機械人收藏</h3>
-              <p>造型型格，適合模型迷或動漫收藏玩家。</p>
-              <div class="product-meta">
-                <span class="price">HK$450</span>
-                <span class="condition">展示品</span>
-              </div>
-              <div class="card-actions">
-                <a
-                  class="btn btn-buy small-btn item-whatsapp"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  data-product="模型機械人收藏"
-                  data-price="HK$450"
-                >
-                  WhatsApp 問價
-                </a>
-                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card" data-category="goods">
-            <div class="product-media">
-              <span class="tag">好物</span>
-              ⌚
-            </div>
-            <div class="product-body">
-              <h3>潮流手錶精品</h3>
-              <p>日常配襯易襯，外觀企理，適合年青人穿搭。</p>
-              <div class="product-meta">
-                <span class="price">HK$760</span>
-                <span class="condition">九成新</span>
-              </div>
-              <div class="card-actions">
-                <a
-                  class="btn btn-buy small-btn item-whatsapp"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                  data-product="潮流手錶精品"
-                  data-price="HK$760"
-                >
-                  WhatsApp 問價
-                </a>
-                <a href="#contact" class="btn btn-outline small-btn">睇詳情</a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="more-products">
-          <h3>想搵其他貨？</h3>
-          <p>
-            如果網站暫時未見到你想要嘅貨品，可以直接 WhatsApp 我哋查詢指定款式。
-          </p>
-          <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
-            🛒 WhatsApp 查詢更多貨品
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section sell-section" id="sell">
-      <div class="container sell-grid">
-        <div>
-          <div class="section-heading">
-            <div class="section-kicker">Sell With Us</div>
-            <h2>想賣嘢？我哋幫你處理</h2>
-            <p>
-              如果你有收藏卡、潮玩、遊戲產品或其他好物想放售，
-              可以先 WhatsApp 傳相及資料畀我哋初步了解。
-            </p>
-          </div>
-
-          <div class="steps">
-            <div class="step">
-              <div class="step-num">01</div>
-              <div>
-                <h3>傳相及資料</h3>
-                <p>提供物品相片、品牌、狀態、配件及你心目中嘅放售價。</p>
-              </div>
-            </div>
-
-            <div class="step">
-              <div class="step-num">02</div>
-              <div>
-                <h3>初步估價</h3>
-                <p>我哋會按市場需求、狀態及熱門程度作初步評估。</p>
-              </div>
-            </div>
-
-            <div class="step">
-              <div class="step-num">03</div>
-              <div>
-                <h3>安排寄賣 / 收購</h3>
-                <p>可按情況安排寄賣、代售或直接收購，流程清晰。</p>
-              </div>
-            </div>
-
-            <div class="step">
-              <div class="step-num">04</div>
-              <div>
-                <h3>成交及交收</h3>
-                <p>成功成交後會通知你，並安排收款或交收細節。</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="sell-panel">
-          <h3>放售前可以準備咩？</h3>
-          <p>
-            為咗加快估價，建議你 WhatsApp 時一次過提供以下資料：
-          </p>
-
-          <ul>
-            <li>物品正面、背面及細節相</li>
-            <li>品牌 / 型號 / 系列名稱</li>
-            <li>新舊程度、有冇盒、有冇配件</li>
-            <li>購入來源或相關證明，如有</li>
-            <li>你希望放售嘅價格範圍</li>
-          </ul>
-
-          <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
-            📦 WhatsApp 查詢放售
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section contact-section" id="contact">
-      <div class="container">
-        <div class="contact-card">
-          <div class="contact-info">
-            <div class="section-kicker">Contact</div>
-            <h2>即刻 WhatsApp 我哋</h2>
-            <p>
-              想查詢買嘢請按「想買」，想放售 / 寄賣請按「想賣」。
-              系統會自動帶入唔同訊息，方便我哋更快回覆你。
-            </p>
-
-            <div class="contact-actions">
-              <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
-                🛒 查詢買嘢
-              </a>
-
-              <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
-                📦 查詢賣嘢
-              </a>
-            </div>
-          </div>
-
-          <div class="contact-boxes">
-            <div class="info-box">
-              <strong>服務範圍</strong>
-              <span>收藏卡、潮玩、遊戲精品、二手好物</span>
-            </div>
-
-            <div class="info-box">
-              <strong>查詢方式</strong>
-              <span>WhatsApp 快速查詢買賣及寄賣安排</span>
-            </div>
-
-            <div class="info-box">
-              <strong>交收安排</strong>
-              <span>可按實際情況商議面交、速遞或其他方式</span>
-            </div>
-
-            <div class="info-box">
-              <strong>提示</strong>
-              <span>貨品價格及存貨以 WhatsApp 最終確認為準</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div class="floating-actions">
-    <a href="#" class="floating-btn floating-buy whatsapp-buy" target="_blank" rel="noopener" aria-label="WhatsApp 查詢買嘢">
-      🛒
-    </a>
-
-    <a href="#" class="floating-btn floating-sell whatsapp-sell" target="_blank" rel="noopener" aria-label="WhatsApp 查詢賣嘢">
-      📦
-    </a>
-  </div>
-
-  <footer class="footer">
-    <div class="container">
-      © 2026 Cash2Joy. All rights reserved.
-    </div>
-  </footer>
-
-  <script>
-    const WHATSAPP_NUMBER = "85291234567";
-
-    const buyMessage = "你好，我想查詢 Cash2Joy 的貨品，想了解價格、狀態及交收方式。";
-    const sellMessage = "你好，我想放售收藏卡或物品，想查詢寄賣代售安排。";
-
-    function whatsappLink(message) {
-      return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+      --line: rgba(148, 163, 184, 0.28);
+      --radius: 24px;
+      --radius-lg: 34px;
+      --shadow: 0 24px 70px rgba(79, 70, 229, 0.18);
+      --shadow-soft: 0 18px 48px rgba(15, 23, 42, 0.1);
+      --max-width: 1180px;
     }
 
-    document.querySelectorAll(".whatsapp-buy").forEach(function(link) {
-      link.href = whatsappLink(buyMessage);
-    });
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    document.querySelectorAll(".whatsapp-sell").forEach(function(link) {
-      link.href = whatsappLink(sellMessage);
-    });
+    html {
+      scroll-behavior: smooth;
+    }
 
-    document.querySelectorAll(".item-whatsapp").forEach(function(link) {
-      const product = link.dataset.product || "貨品";
-      const price = link.dataset.price || "";
-      const message = "你好，我想查詢 Cash2Joy 的「" + product + "」" + (price ? "，標示價格為 " + price : "") + "，想了解貨品狀態、是否仍有現貨及交收方式。";
-      link.href = whatsappLink(message);
-    });
+    body {
+      font-family: Arial, "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      color: var(--text);
+      line-height: 1.65;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 78, 205, 0.16), transparent 26%),
+        radial-gradient(circle at 86% 10%, rgba(56, 189, 248, 0.18), transparent 28%),
+        radial-gradient(circle at 50% 45%, rgba(124, 58, 237, 0.08), transparent 36%),
+        var(--bg);
+      overflow-x: hidden;
+    }
 
-    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-    const navLinks = document.getElementById("navLinks");
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    mobileMenuBtn.addEventListener("click", function() {
-      navLinks.classList.toggle("active");
-    });
+    button,
+    input,
+    textarea {
+      font-family: inherit;
+    }
 
-    document.querySelectorAll(".nav-links a").forEach(function(link) {
-      link.addEventListener("click", function() {
-        navLinks.classList.remove("active");
-      });
-    });
+    .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
 
-    const filterButtons = document.querySelectorAll(".filter-pill");
-    const productCards = document.querySelectorAll(".product-card");
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
 
-    filterButtons.forEach(function(button) {
-      button.addEventListener("click", function() {
-        const filter = button.dataset.filter;
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
 
-        filterButtons.forEach(function(btn) {
-          btn.classList.remove("active");
-        });
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 950;
+      font-size: 1.38rem;
+      letter-spacing: -0.5px;
+      color: var(--dark);
+      white-space: nowrap;
+    }
 
-        button.classList.add("active");
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.32);
+      transform: rotate(-6deg);
+      font-weight: 950;
+      font-size: 0.8rem;
+    }
 
-        productCards.forEach(function(card) {
-          const category = card.dataset.category;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: #475569;
+      font-size: 0.96rem;
+      font-weight: 750;
+    }
 
-          if (filter === "all" || category === filter) {
-            card.style.display = "";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      });
-    });
-  </script>
-</body>
-</html>
+    .nav-links a {
+      position: relative;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--purple);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 0.95rem;
+      text-align: center;
+      transition: 0.22s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-buy {
+      background: linear-gradient(135deg, var(--mint), #22c55e);
+      color: white;
+      box-shadow: 0 12px 28px rgba(34, 197, 94, 0.28);
+    }
+
+    .btn-sell {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white;
+      box-shadow: 0 12px 28px rgba(219, 39, 168, 0.28);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--purple);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: white;
+      color: var(--dark);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      padding: 90px 0 78px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 54px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      color: var(--purple-dark);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(124, 58, 237, 0.18);
+      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.1);
+      font-weight: 900;
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.55rem, 6vw, 5.45rem);
+      line-height: 0.98;
+      letter-spacing: -2.8px;
+      color: var(--dark);
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--pink), var(--purple), var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #475569;
+      font-size: 1.12rem;
+      max-width: 650px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-points span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #334155;
+      font-weight: 800;
+      font-size: 0.94rem;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    .phone-card-wrap {
+      display: grid;
+      place-items: center;
+    }
+
+    .phone-card {
+      width: min(100%, 355px);
+      border-radius: 42px;
+      padding: 16px;
+      background: #111827;
+      box-shadow: 0 30px 80px rgba(17, 24, 39, 0.28);
+    }
+
+    .phone-screen {
+      border-radius: 30px;
+      min-height: 560px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255, 78, 205, 0.24), transparent 36%),
+        radial-gradient(circle at 100% 20%, rgba(56, 189, 248, 0.26), transparent 38%),
+        linear-gradient(180deg, #ffffff, #f8fafc);
+      overflow: hidden;
+    }
+
+    .phone-top {
+      padding: 18px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .phone-title {
+      font-weight: 950;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+
+    .phone-title small {
+      display: block;
+      color: #64748b;
+      font-weight: 800;
+      font-size: 0.78rem;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      font-weight: 950;
+      font-size: 0.8rem;
+    }
+
+    .story-row {
+      display: flex;
+      gap: 10px;
+      padding: 4px 18px 18px;
+      overflow: hidden;
+    }
+
+    .story {
+      flex: 0 0 58px;
+      height: 58px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--pink), var(--blue));
+      padding: 3px;
+    }
+
+    .story div {
+      height: 100%;
+      border-radius: 17px;
+      background: white;
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem;
+    }
+
+    .feature-product {
+      margin: 0 18px;
+      border-radius: 26px;
+      padding: 18px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.92), rgba(255, 78, 205, 0.88));
+      color: white;
+      box-shadow: 0 18px 40px rgba(124, 58, 237, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-emoji {
+      font-size: 4.8rem;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .feature-product h3 {
+      font-size: 1.28rem;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .feature-product p {
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .mini-grid {
+      padding: 16px 18px 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-card {
+      border-radius: 22px;
+      padding: 14px;
+      background: white;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    .mini-card strong {
+      display: block;
+      color: var(--dark);
+      font-size: 0.92rem;
+    }
+
+    .mini-card span {
+      color: #64748b;
+      font-size: 0.8rem;
+      font-weight: 750;
+    }
+
+    .section {
+      padding: 78px 0;
+    }
+
+    .section-heading {
+      max-width: 730px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--pink-dark);
+      font-weight: 950;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+    }
+
+    .section h2,
+    .contact-info h2 {
+      color: var(--dark);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.08;
+      letter-spacing: -1.4px;
+      margin-bottom: 14px;
+    }
+
+    .section-heading p {
+      color: #64748b;
+      font-size: 1.05rem;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .category-card {
+      padding: 24px;
+      min-height: 180px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: var(--shadow-soft);
+      transition: 0.22s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+    }
+
+    .cat-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      font-size: 1.55rem;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 26px rgba(124, 58, 237, 0.22);
+    }
+
+    .category-card:nth-child(2) .cat-icon {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+    }
+
+    .category-card:nth-child(3) .cat-icon {
+      background: linear-gradient(135deg, var(--mint), var(--blue));
+    }
+
+    .category-card:nth-child(4) .cat-icon {
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+    }
+
+    .category-card h3 {
+      color: var(--dark);
+      margin-bottom: 7px;
+      font-size: 1.15rem;
+    }
+
+    .category-card p {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .products-section {
+      background:
+        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.12), transparent 30%),
+        radial-gradient(circle at 100% 20%, rgba(255, 78, 205, 0.12), transparent 30%),
+        #ffffff;
+    }
+
+    .product-top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-end;
+      margin-bottom: 28px;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-pill {
+      border: 1px solid rgba(124, 58, 237, 0.18);
+      background: white;
+      color: var(--purple);
+      font-weight: 900;
+      border-radius: 999px;
+      padding: 9px 13px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white;
+      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: white;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      transition: 0.24s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-9px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-media {
+      min-height: 230px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
+        linear-gradient(135deg, var(--purple), var(--pink));
+    }
+
+    .product-card:nth-child(2) .product-media {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--purple));
+    }
+
+    .product-card:nth-child(3) .product-media {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
+        linear-gradient(135deg, var(--mint), var(--blue));
+    }
+
+    .product-card:nth-child(4) .product-media {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
+        linear-gradient(135deg, var(--yellow), var(--orange));
+    }
+
+    .product-card:nth-child(5) .product-media {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
+        linear-gradient(135deg, #fb7185, var(--pink));
+    }
+
+    .product-card:nth-child(6) .product-media {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
+        linear-gradient(135deg, #06b6d4, #6366f1);
+    }
+
+    .tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--purple-dark);
+      font-size: 0.78rem;
+      font-weight: 950;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+    }
+
+    .product-body {
+      padding: 22px;
+    }
+
+    .product-body h3 {
+      color: var(--dark);
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .product-body p {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .product-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+
+    .price {
+      color: var(--pink-dark);
+      font-weight: 950;
+      font-size: 1.15rem;
+    }
+
+    .condition {
+      color: #475569;
+      font-weight: 850;
+      font-size: 0.86rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      white-space: nowrap;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .small-btn {
+      min-height: 42px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+    }
+
+    .more-products {
+      margin-top: 34px;
+      padding: 24px;
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(255, 78, 205, 0.09), rgba(56, 189, 248, 0.1)),
+        white;
+      border: 1px dashed rgba(124, 58, 237, 0.28);
+      text-align: center;
+    }
+
+    .more-products h3 {
+      color: var(--dark);
+      margin-bottom: 8px;
+      font-size: 1.35rem;
+    }
+
+    .more-products p {
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .sell-section {
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 78, 205, 0.13), transparent 26%),
+        radial-gradient(circle at 85% 0%, rgba(52, 211, 153, 0.16), transparent 28%),
+        linear-gradient(135deg, #111827, #312e81);
+      color: white;
+    }
+
+    .sell-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .sell-section .section-kicker {
+      color: #f9a8d4;
+    }
+
+    .sell-section h2 {
+      color: white;
+    }
+
+    .sell-section .section-heading p {
+      color: #cbd5e1;
+    }
+
+    .steps {
+      display: grid;
+      gap: 16px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 20px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    .step-num {
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--pink), var(--blue));
+      color: white;
+      font-weight: 950;
+      font-size: 1.25rem;
+    }
+
+    .step h3 {
+      margin-bottom: 5px;
+      color: white;
+    }
+
+    .step p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .sell-panel {
+      padding: 34px;
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--dark);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+    }
+
+    .sell-panel h3 {
+      font-size: 1.6rem;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .sell-panel p {
+      color: #475569;
+    }
+
+    .sell-panel ul {
+      list-style: none;
+      display: grid;
+      gap: 11px;
+      margin: 20px 0 24px;
+      color: #475569;
+    }
+
+    .sell-panel li {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+    }
+
+    .sell-panel li::before {
+      content: "✓";
+      color: #059669;
+      font-weight: 950;
+    }
+
+    .contact-section {
+      background:
+        radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1), transparent 26%),
+        radial-gradient(circle at 90% 10%, rgba(255, 78, 205, 0.1), transparent 28%),
+        #f8fafc;
+    }
+
+    .contact-card {
+      border-radius: 38px;
+      padding: 42px;
+      background: white;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .contact-info p {
+      color: #64748b;
+      margin-bottom: 22px;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .contact-boxes {
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-box {
+      padding: 18px;
+      border-radius: 22px;
+      background: #f8fafc;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .info-box strong {
+      display: block;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .info-box span {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .floating-actions {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1100;
+      display: grid;
+      gap: 12px;
+    }
+
+    .floating-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 1.45rem;
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.22);
+      transition: 0.22s ease;
+    }
+
+    .floating-btn:hover {
+      transform: translateY(-5px) scale(1.04);
+    }
+
+    .floating-buy {
+      background: linear-gradient(135deg, var(--mint), #22c55e);
+    }
+
+    .floating-sell {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+    }
+
+    .footer {
+      padding: 28px 0;
+      color: #94a3b8;
+      background: #0f172a;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        flex-wrap: wrap;
+        padding: 12px 0;
+      }
+
+      .mobile-menu-btn {
+        display: grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 0 4px;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .header-actions {
+        display: none;
+      }
+
+      .hero-grid,
+      .sell-grid,
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-card {
+        transform: none;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-top-row {
+        display: block;
+      }
+
+      .filter-pills {
+        margin-top: 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 24px, var(--max-width));
+      }
+
+      .hero {
+        padding: 58px 0 58px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.6px;
+      }
+
+      .hero-actions,
+      .contact-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-points {
+        display: grid;
+      }
+
+      .section {
+        padding: 56px 0;
+      }
+
+      .category-grid,
+      .product-grid,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-screen {
+        min-height: auto;
+      }
+
+      .product-media {
+        min-height: 200px;
+      }
+
+      .card-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .sell-panel,
+      .contact-card {
+        padding: 26px;
+        border-radius: 28px;
+      }
+
+      .step {
+        grid-template-columns: 1fr;
+      }
+
+      .floating-actions {
+        right: 14px;
+        bottom: 14px;
+      }
+
+      .floating-btn {
+        width: 54px;
+        height: 54px;
+        border-radius: 19px;
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="logo" aria-label="Cash2Joy Home">
+        <span class="logo-mark">C2J</span>
+        <span>Cash2Joy</span>
+      </a>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打開選單">
+        ☰
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#categories">熱門分類</a>
+        <a href="#products">貨物展示</a>
+        <a href="#sell">寄賣代售</a>
+        <a href="#contact">聯絡我們</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
+          🛒 想買
+        </a>
+        <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
+          📦 想賣
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">
+            ✨ 潮流收藏買賣平台
+          </div>
+
+          <h1>
+            買得開心，<br />
+            賣得放心，<br />
+            <span class="gradient-text">Cash2Joy</span>
+          </h1>
+
+          <p>
+            專注收藏卡、潮流玩具、精品好物買賣及寄賣代售。
+            無論你想搵心頭好，定係想將收藏變現，都可以用 WhatsApp 快速查詢。
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
+              🛒 我想買 / 查詢貨品
+            </a>
+            <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
+              📦 我想賣 / 寄賣代售
+            </a>
+            <a href="#products" class="btn btn-outline">
+              🔥 睇貨物展示
+            </a>
+          </div>
+
+          <div class="hero-points">
+            <span>⚡ WhatsApp 快速回覆</span>
+            <span>🔍 清楚報價</span>
+            <span>🤝 靈活交收</span>
+            <span>💎 精選收藏</span>
+          </div>
+        </div>
+
+        <div class="phone-card-wrap" aria-hidden="true">
+          <div class="phone-card">
+            <div class="phone-screen">
+              <div class="phone-top">
+                <div class="phone-title">
+                  Cash2Joy Picks
+                  <small>New drops this week</small>
+                </div>
+                <div class="avatar">C2J</div>
+              </div>
+
+              <div class="story-row">
+                <div class="story"><div>🃏</div></div>
+                <div class="story"><div>🎮</div></div>
+                <div class="story"><div>🧸</div></div>
+                <div class="story"><div>⌚</div></div>
+              </div>
+
+              <div class="feature-product">
+                <div class="product-emoji">🃏</div>
+                <h3>人氣收藏卡組合</h3>
+                <p>精選卡款、狀態清晰、適合收藏或送禮。</p>
+              </div>
+
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <strong>想買？</strong>
+                  <span>即時查價</span>
+                </div>
+                <div class="mini-card">
+                  <strong>想賣？</strong>
+                  <span>快速估價</span>
+                </div>
+                <div class="mini-card">
+                  <strong>寄賣</strong>
+                  <span>流程簡單</span>
+                </div>
+                <div class="mini-card">
+                  <strong>交收</strong>
+                  <span>彈性安排</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
