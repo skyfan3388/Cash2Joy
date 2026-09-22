@@ -3,36 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Cash2Joy｜潮流收藏買賣・寄賣代售</title>
-  <meta
-    name="description"
-    content="Cash2Joy 專注收藏卡、潮流玩具、遊戲精品、二手好物買賣及寄賣代售服務。WhatsApp 快速查詢買嘢或賣嘢。"
-  />
+  <title>Cash2Joy | 精選貨物展示</title>
+  <meta name="description" content="Cash2Joy 精選貨物展示網站，輕鬆瀏覽心水商品並透過 WhatsApp 查詢。" />
 
   <style>
     :root {
-      --bg: #f8fafc;
-      --dark: #111827;
-      --text: #1f2937;
-      --muted: #64748b;
-      --white: #ffffff;
-
-      --pink: #ff4ecd;
-      --pink-dark: #db27a8;
-      --purple: #7c3aed;
-      --purple-dark: #5b21b6;
-      --blue: #38bdf8;
-      --mint: #34d399;
-      --yellow: #facc15;
-      --orange: #fb923c;
-
-      --line: rgba(148, 163, 184, 0.28);
-      --radius: 24px;
-      --radius-lg: 34px;
-      --shadow: 0 24px 70px rgba(79, 70, 229, 0.18);
-      --shadow-soft: 0 18px 48px rgba(15, 23, 42, 0.1);
-      --max-width: 1180px;
+      --bg: #fffaf3;
+      --card: #ffffff;
+      --text: #2f2f2f;
+      --muted: #777777;
+      --primary: #ff9f68;
+      --primary-dark: #f47b45;
+      --secondary: #7dd3c7;
+      --soft: #fff1e6;
+      --border: #f0dfcf;
+      --shadow: 0 10px 30px rgba(60, 38, 20, 0.08);
+      --radius: 20px;
+      --green: #25d366;
+      --danger: #e85d75;
     }
 
     * {
@@ -46,15 +34,15 @@
     }
 
     body {
-      font-family: Arial, "Microsoft JhengHei", "Noto Sans TC", sans-serif;
-      color: var(--text);
-      line-height: 1.65;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
+        "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
       background:
-        radial-gradient(circle at 12% 8%, rgba(255, 78, 205, 0.16), transparent 26%),
-        radial-gradient(circle at 86% 10%, rgba(56, 189, 248, 0.18), transparent 28%),
-        radial-gradient(circle at 50% 45%, rgba(124, 58, 237, 0.08), transparent 36%),
+        radial-gradient(circle at top left, rgba(255, 159, 104, 0.18), transparent 35%),
+        radial-gradient(circle at top right, rgba(125, 211, 199, 0.22), transparent 30%),
         var(--bg);
-      overflow-x: hidden;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
     }
 
     a {
@@ -64,473 +52,223 @@
 
     button,
     input,
-    textarea {
+    select {
       font-family: inherit;
     }
 
     .container {
-      width: min(100% - 32px, var(--max-width));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
 
-    .site-header {
+    header {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      z-index: 50;
+      background: rgba(255, 250, 243, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(240, 223, 207, 0.8);
     }
 
     .nav {
-      min-height: 78px;
+      height: 74px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: 0.3px;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-weight: 950;
-      font-size: 1.38rem;
-      letter-spacing: -0.5px;
-      color: var(--dark);
-      white-space: nowrap;
-    }
-
-    .logo-mark {
       width: 42px;
       height: 42px;
-      border-radius: 16px;
+      border-radius: 14px;
       display: grid;
       place-items: center;
-      color: white;
-      background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
-      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.32);
-      transform: rotate(-6deg);
-      font-weight: 950;
-      font-size: 0.8rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(255, 159, 104, 0.35);
+      font-weight: 900;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 22px;
-      color: #475569;
-      font-size: 0.96rem;
-      font-weight: 750;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
     .nav-links a {
-      position: relative;
-      transition: 0.2s ease;
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: 0.2s;
     }
 
     .nav-links a:hover {
-      color: var(--purple);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      white-space: nowrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 46px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      border: 0;
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 0.95rem;
-      text-align: center;
-      transition: 0.22s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-    }
-
-    .btn-buy {
-      background: linear-gradient(135deg, var(--mint), #22c55e);
-      color: white;
-      box-shadow: 0 12px 28px rgba(34, 197, 94, 0.28);
-    }
-
-    .btn-sell {
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      color: white;
-      box-shadow: 0 12px 28px rgba(219, 39, 168, 0.28);
-    }
-
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.8);
-      color: var(--purple);
-      border: 1px solid rgba(124, 58, 237, 0.2);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 1px solid rgba(148, 163, 184, 0.28);
-      background: white;
-      color: var(--dark);
-      font-size: 1.4rem;
-      cursor: pointer;
+      background: var(--soft);
+      color: var(--primary-dark);
     }
 
     .hero {
-      position: relative;
-      padding: 90px 0 78px;
-      overflow: hidden;
+      padding: 58px 0 34px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1.2fr 0.8fr;
       align-items: center;
-      gap: 54px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border-radius: 999px;
-      color: var(--purple-dark);
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(124, 58, 237, 0.18);
-      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.1);
-      font-weight: 900;
-      font-size: 0.92rem;
-      margin-bottom: 18px;
+      gap: 36px;
     }
 
     .hero h1 {
-      font-size: clamp(2.55rem, 6vw, 5.45rem);
-      line-height: 0.98;
-      letter-spacing: -2.8px;
-      color: var(--dark);
-      margin-bottom: 22px;
+      font-size: clamp(2.3rem, 6vw, 4.8rem);
+      line-height: 1.05;
+      margin-bottom: 18px;
+      letter-spacing: -1.5px;
     }
 
-    .gradient-text {
-      background: linear-gradient(90deg, var(--pink), var(--purple), var(--blue));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .hero h1 span {
+      color: var(--primary-dark);
     }
 
     .hero p {
-      color: #475569;
-      font-size: 1.12rem;
-      max-width: 650px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 620px;
       margin-bottom: 28px;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-
-    .hero-points {
-      display: flex;
-      flex-wrap: wrap;
       gap: 12px;
+      align-items: center;
     }
 
-    .hero-points span {
+    .btn {
+      border: 0;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 9px 13px;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      color: #334155;
-      font-weight: 800;
-      font-size: 0.94rem;
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      font-size: 0.96rem;
+      white-space: nowrap;
     }
 
-    .phone-card-wrap {
-      display: grid;
-      place-items: center;
+    .btn:hover {
+      transform: translateY(-2px);
     }
 
-    .phone-card {
-      width: min(100%, 355px);
-      border-radius: 42px;
-      padding: 16px;
-      background: #111827;
-      box-shadow: 0 30px 80px rgba(17, 24, 39, 0.28);
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(244, 123, 69, 0.25);
     }
 
-    .phone-screen {
-      border-radius: 30px;
-      min-height: 560px;
-      background:
-        radial-gradient(circle at 20% 0%, rgba(255, 78, 205, 0.24), transparent 36%),
-        radial-gradient(circle at 100% 20%, rgba(56, 189, 248, 0.26), transparent 38%),
-        linear-gradient(180deg, #ffffff, #f8fafc);
-      overflow: hidden;
+    .btn-outline {
+      background: #fff;
+      color: var(--primary-dark);
+      border: 1px solid var(--border);
     }
 
-    .phone-top {
-      padding: 18px 18px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .phone-title {
-      font-weight: 950;
-      color: var(--dark);
-      line-height: 1.2;
-    }
-
-    .phone-title small {
-      display: block;
-      color: #64748b;
-      font-weight: 800;
-      font-size: 0.78rem;
-    }
-
-    .avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      font-weight: 950;
-      font-size: 0.8rem;
-    }
-
-    .story-row {
-      display: flex;
-      gap: 10px;
-      padding: 4px 18px 18px;
-      overflow: hidden;
-    }
-
-    .story {
-      flex: 0 0 58px;
-      height: 58px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, var(--pink), var(--blue));
-      padding: 3px;
-    }
-
-    .story div {
-      height: 100%;
-      border-radius: 17px;
-      background: white;
-      display: grid;
-      place-items: center;
-      font-size: 1.25rem;
-    }
-
-    .feature-product {
-      margin: 0 18px;
-      border-radius: 26px;
-      padding: 18px;
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.92), rgba(255, 78, 205, 0.88));
-      color: white;
-      box-shadow: 0 18px 40px rgba(124, 58, 237, 0.25);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .product-emoji {
-      font-size: 4.8rem;
-      line-height: 1;
-      margin-bottom: 16px;
-    }
-
-    .feature-product h3 {
-      font-size: 1.28rem;
-      line-height: 1.25;
-      margin-bottom: 8px;
-    }
-
-    .feature-product p {
-      color: rgba(255, 255, 255, 0.86);
-      font-size: 0.9rem;
-      margin: 0;
-    }
-
-    .mini-grid {
-      padding: 16px 18px 18px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .mini-card {
-      border-radius: 22px;
-      padding: 14px;
-      background: white;
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
-    }
-
-    .mini-card strong {
-      display: block;
-      color: var(--dark);
-      font-size: 0.92rem;
-    }
-
-    .mini-card span {
-      color: #64748b;
-      font-size: 0.8rem;
-      font-weight: 750;
-    }
-
-    .section {
-      padding: 78px 0;
-    }
-
-    .section-heading {
-      max-width: 730px;
-      margin-bottom: 34px;
-    }
-
-    .section-kicker {
-      color: var(--pink-dark);
-      font-weight: 950;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      font-size: 0.82rem;
-      margin-bottom: 8px;
-    }
-
-    .section h2,
-    .contact-info h2 {
-      color: var(--dark);
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      line-height: 1.08;
-      letter-spacing: -1.4px;
-      margin-bottom: 14px;
-    }
-
-    .section-heading p {
-      color: #64748b;
-      font-size: 1.05rem;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .category-card {
+    .hero-card {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 32px;
       padding: 24px;
-      min-height: 180px;
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      box-shadow: var(--shadow-soft);
-      transition: 0.22s ease;
-    }
-
-    .category-card:hover {
-      transform: translateY(-8px);
       box-shadow: var(--shadow);
     }
 
-    .cat-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
+    .hero-card-inner {
+      min-height: 280px;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(255, 159, 104, 0.2), rgba(125, 211, 199, 0.25)),
+        #fff;
       display: grid;
       place-items: center;
-      color: white;
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      font-size: 1.55rem;
-      margin-bottom: 18px;
-      box-shadow: 0 12px 26px rgba(124, 58, 237, 0.22);
+      text-align: center;
+      padding: 28px;
     }
 
-    .category-card:nth-child(2) .cat-icon {
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+    .hero-card-inner .emoji {
+      font-size: 4.3rem;
+      margin-bottom: 12px;
     }
 
-    .category-card:nth-child(3) .cat-icon {
-      background: linear-gradient(135deg, var(--mint), var(--blue));
+    .hero-card-inner h2 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
     }
 
-    .category-card:nth-child(4) .cat-icon {
-      background: linear-gradient(135deg, var(--yellow), var(--orange));
-    }
-
-    .category-card h3 {
-      color: var(--dark);
-      margin-bottom: 7px;
-      font-size: 1.15rem;
-    }
-
-    .category-card p {
-      color: #64748b;
+    .hero-card-inner p {
+      margin: 0;
       font-size: 0.95rem;
     }
 
-    .products-section {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.12), transparent 30%),
-        radial-gradient(circle at 100% 20%, rgba(255, 78, 205, 0.12), transparent 30%),
-        #ffffff;
+    .toolbar {
+      margin: 20px 0 26px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 12px;
     }
 
-    .product-top-row {
+    .search-box,
+    .filter-box {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 13px 15px;
+      border-radius: 14px;
+      outline: none;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .search-box:focus,
+    .filter-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255, 159, 104, 0.15);
+    }
+
+    .section-title {
       display: flex;
+      align-items: end;
       justify-content: space-between;
-      gap: 20px;
-      align-items: flex-end;
-      margin-bottom: 28px;
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
-    .filter-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    .section-title h2 {
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
     }
 
-    .filter-pill {
-      border: 1px solid rgba(124, 58, 237, 0.18);
-      background: white;
-      color: var(--purple);
-      font-weight: 900;
-      border-radius: 999px;
-      padding: 9px 13px;
-      cursor: pointer;
-      transition: 0.2s ease;
+    .section-title p {
+      color: var(--muted);
+      font-size: 0.95rem;
     }
 
-    .filter-pill:hover,
-    .filter-pill.active {
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      color: white;
-      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.18);
-      transform: translateY(-2px);
+    .products {
+      padding-bottom: 70px;
     }
 
     .product-grid {
@@ -540,502 +278,280 @@
     }
 
     .product-card {
-      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       overflow: hidden;
-      background: white;
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      box-shadow: var(--shadow-soft);
-      transition: 0.24s ease;
+      box-shadow: var(--shadow);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
     }
 
     .product-card:hover {
-      transform: translateY(-9px);
-      box-shadow: var(--shadow);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 38px rgba(60, 38, 20, 0.12);
     }
 
-    .product-media {
-      min-height: 230px;
+    .image-slider {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: var(--soft);
+      overflow: hidden;
+    }
+
+    .image-slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
       display: grid;
       place-items: center;
-      color: white;
-      font-size: 5rem;
-      position: relative;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
-        linear-gradient(135deg, var(--purple), var(--pink));
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--text);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      transition: 0.18s;
     }
 
-    .product-card:nth-child(2) .product-media {
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
-        linear-gradient(135deg, var(--blue), var(--purple));
+    .slider-btn:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.06);
     }
 
-    .product-card:nth-child(3) .product-media {
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
-        linear-gradient(135deg, var(--mint), var(--blue));
+    .slider-btn.prev {
+      left: 10px;
     }
 
-    .product-card:nth-child(4) .product-media {
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
-        linear-gradient(135deg, var(--yellow), var(--orange));
+    .slider-btn.next {
+      right: 10px;
     }
 
-    .product-card:nth-child(5) .product-media {
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
-        linear-gradient(135deg, #fb7185, var(--pink));
-    }
-
-    .product-card:nth-child(6) .product-media {
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.32), transparent 30%),
-        linear-gradient(135deg, #06b6d4, #6366f1);
-    }
-
-    .tag {
+    .image-count {
       position: absolute;
-      top: 16px;
-      left: 16px;
-      padding: 7px 11px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--purple-dark);
+      right: 10px;
+      bottom: 10px;
+      background: rgba(0, 0, 0, 0.58);
+      color: #fff;
       font-size: 0.78rem;
-      font-weight: 950;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+      padding: 4px 9px;
+      border-radius: 999px;
     }
 
-    .product-body {
-      padding: 22px;
+    .badge {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background: var(--secondary);
+      color: #154a43;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
     }
 
-    .product-body h3 {
-      color: var(--dark);
+    .sold-badge {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .product-info {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .product-category {
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .product-title {
       font-size: 1.2rem;
-      margin-bottom: 8px;
+      line-height: 1.35;
     }
 
-    .product-body p {
-      color: #64748b;
-      font-size: 0.95rem;
-      margin-bottom: 16px;
+    .product-desc {
+      color: var(--muted);
+      font-size: 0.94rem;
+      flex: 1;
     }
 
-    .product-meta {
+    .product-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 17px;
+      margin-top: 8px;
     }
 
     .price {
-      color: var(--pink-dark);
-      font-weight: 950;
-      font-size: 1.15rem;
-    }
-
-    .condition {
-      color: #475569;
-      font-weight: 850;
-      font-size: 0.86rem;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f1f5f9;
-      white-space: nowrap;
-    }
-
-    .card-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .small-btn {
-      min-height: 42px;
-      padding: 10px 12px;
-      font-size: 0.88rem;
-    }
-
-    .more-products {
-      margin-top: 34px;
-      padding: 24px;
-      border-radius: 28px;
-      background:
-        linear-gradient(135deg, rgba(255, 78, 205, 0.09), rgba(56, 189, 248, 0.1)),
-        white;
-      border: 1px dashed rgba(124, 58, 237, 0.28);
-      text-align: center;
-    }
-
-    .more-products h3 {
-      color: var(--dark);
-      margin-bottom: 8px;
-      font-size: 1.35rem;
-    }
-
-    .more-products p {
-      color: #64748b;
-      margin-bottom: 16px;
-    }
-
-    .sell-section {
-      background:
-        radial-gradient(circle at 15% 20%, rgba(255, 78, 205, 0.13), transparent 26%),
-        radial-gradient(circle at 85% 0%, rgba(52, 211, 153, 0.16), transparent 28%),
-        linear-gradient(135deg, #111827, #312e81);
-      color: white;
-    }
-
-    .sell-grid {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 42px;
-      align-items: center;
-    }
-
-    .sell-section .section-kicker {
-      color: #f9a8d4;
-    }
-
-    .sell-section h2 {
-      color: white;
-    }
-
-    .sell-section .section-heading p {
-      color: #cbd5e1;
-    }
-
-    .steps {
-      display: grid;
-      gap: 16px;
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: 58px 1fr;
-      gap: 16px;
-      align-items: start;
-      padding: 20px;
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.09);
-      border: 1px solid rgba(255, 255, 255, 0.13);
-    }
-
-    .step-num {
-      width: 58px;
-      height: 58px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--pink), var(--blue));
-      color: white;
-      font-weight: 950;
+      color: var(--primary-dark);
       font-size: 1.25rem;
+      font-weight: 900;
     }
 
-    .step h3 {
-      margin-bottom: 5px;
-      color: white;
+    .whatsapp-btn {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(37, 211, 102, 0.22);
+      padding: 10px 14px;
+      font-size: 0.9rem;
     }
 
-    .step p {
-      color: #cbd5e1;
-      font-size: 0.95rem;
+    .whatsapp-btn.disabled {
+      background: #b8b8b8;
+      pointer-events: none;
+      box-shadow: none;
     }
 
-    .sell-panel {
-      padding: 34px;
-      border-radius: 34px;
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--dark);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
-    }
-
-    .sell-panel h3 {
-      font-size: 1.6rem;
-      line-height: 1.2;
-      margin-bottom: 14px;
-    }
-
-    .sell-panel p {
-      color: #475569;
-    }
-
-    .sell-panel ul {
-      list-style: none;
-      display: grid;
-      gap: 11px;
-      margin: 20px 0 24px;
-      color: #475569;
-    }
-
-    .sell-panel li {
-      display: flex;
-      gap: 9px;
-      align-items: flex-start;
-    }
-
-    .sell-panel li::before {
-      content: "✓";
-      color: #059669;
-      font-weight: 950;
-    }
-
-    .contact-section {
-      background:
-        radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1), transparent 26%),
-        radial-gradient(circle at 90% 10%, rgba(255, 78, 205, 0.1), transparent 28%),
-        #f8fafc;
-    }
-
-    .contact-card {
-      border-radius: 38px;
-      padding: 42px;
-      background: white;
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 34px;
-      align-items: center;
-    }
-
-    .contact-info p {
-      color: #64748b;
-      margin-bottom: 22px;
-    }
-
-    .contact-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .contact-boxes {
-      display: grid;
-      gap: 14px;
-    }
-
-    .info-box {
-      padding: 18px;
-      border-radius: 22px;
-      background: #f8fafc;
-      border: 1px solid rgba(148, 163, 184, 0.18);
-    }
-
-    .info-box strong {
-      display: block;
-      color: var(--dark);
-      margin-bottom: 4px;
-    }
-
-    .info-box span {
-      color: #64748b;
-      font-size: 0.95rem;
-    }
-
-    .floating-actions {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 1100;
-      display: grid;
-      gap: 12px;
-    }
-
-    .floating-btn {
-      width: 60px;
-      height: 60px;
-      border-radius: 22px;
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 1.45rem;
-      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.22);
-      transition: 0.22s ease;
-    }
-
-    .floating-btn:hover {
-      transform: translateY(-5px) scale(1.04);
-    }
-
-    .floating-buy {
-      background: linear-gradient(135deg, var(--mint), #22c55e);
-    }
-
-    .floating-sell {
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-    }
-
-    .footer {
-      padding: 28px 0;
-      color: #94a3b8;
-      background: #0f172a;
+    .empty {
+      display: none;
       text-align: center;
-      font-size: 0.92rem;
+      padding: 40px 20px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
     }
 
-    @media (max-width: 980px) {
-      .nav {
-        flex-wrap: wrap;
-        padding: 12px 0;
-      }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0;
+      color: var(--muted);
+      text-align: center;
+      background: rgba(255, 255, 255, 0.5);
+    }
 
-      .mobile-menu-btn {
-        display: grid;
-        place-items: center;
-      }
+    .back-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 0;
+      cursor: pointer;
+      background: var(--primary-dark);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(244, 123, 69, 0.32);
+      display: none;
+      place-items: center;
+      font-size: 1.2rem;
+      z-index: 40;
+    }
 
-      .nav-links {
-        order: 3;
-        width: 100%;
-        display: none;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-        padding: 14px 0 4px;
-      }
+    .back-top.show {
+      display: grid;
+    }
 
-      .nav-links.active {
-        display: flex;
-      }
-
-      .header-actions {
-        display: none;
-      }
-
-      .hero-grid,
-      .sell-grid,
-      .contact-card {
+    @media (max-width: 960px) {
+      .hero-grid {
         grid-template-columns: 1fr;
       }
 
-      .phone-card {
-        transform: none;
-      }
-
-      .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .hero-card {
+        order: -1;
       }
 
       .product-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-
-      .product-top-row {
-        display: block;
-      }
-
-      .filter-pills {
-        margin-top: 18px;
-      }
     }
 
     @media (max-width: 640px) {
       .container {
-        width: min(100% - 24px, var(--max-width));
+        width: min(100% - 22px, 1180px);
+      }
+
+      .nav {
+        height: auto;
+        padding: 14px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
       }
 
       .hero {
-        padding: 58px 0 58px;
+        padding: 34px 0 24px;
       }
 
-      .hero h1 {
-        letter-spacing: -1.6px;
+      .hero p {
+        font-size: 1rem;
       }
 
-      .hero-actions,
-      .contact-actions {
-        display: grid;
-        grid-template-columns: 1fr;
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
       }
 
       .btn {
         width: 100%;
       }
 
-      .hero-points {
-        display: grid;
-      }
-
-      .section {
-        padding: 56px 0;
-      }
-
-      .category-grid,
-      .product-grid,
-      .mini-grid {
+      .toolbar {
         grid-template-columns: 1fr;
       }
 
-      .phone-screen {
-        min-height: auto;
+      .section-title {
+        align-items: flex-start;
+        flex-direction: column;
       }
 
-      .product-media {
-        min-height: 200px;
-      }
-
-      .card-actions {
+      .product-grid {
         grid-template-columns: 1fr;
       }
 
-      .sell-panel,
-      .contact-card {
-        padding: 26px;
-        border-radius: 28px;
+      .product-bottom {
+        flex-direction: column;
+        align-items: stretch;
       }
 
-      .step {
-        grid-template-columns: 1fr;
+      .whatsapp-btn {
+        width: 100%;
       }
 
-      .floating-actions {
-        right: 14px;
-        bottom: 14px;
-      }
-
-      .floating-btn {
-        width: 54px;
-        height: 54px;
-        border-radius: 19px;
-        font-size: 1.3rem;
+      .hero-card-inner {
+        min-height: 220px;
       }
     }
   </style>
 </head>
 
 <body>
-  <header class="site-header">
+  <header>
     <div class="container nav">
-      <a href="#" class="logo" aria-label="Cash2Joy Home">
-        <span class="logo-mark">C2J</span>
+      <a href="#" class="brand" aria-label="Cash2Joy 首頁">
+        <div class="logo">C2J</div>
         <span>Cash2Joy</span>
       </a>
 
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打開選單">
-        ☰
-      </button>
-
-      <nav class="nav-links" id="navLinks">
-        <a href="#categories">熱門分類</a>
-        <a href="#products">貨物展示</a>
-        <a href="#sell">寄賣代售</a>
-        <a href="#contact">聯絡我們</a>
+      <nav class="nav-links" aria-label="主選單">
+        <a href="#products">貨物</a>
+        <a href="#how-to-buy">查詢方法</a>
+        <a href="https://wa.me/" id="topWhatsapp" target="_blank" rel="noopener">WhatsApp</a>
       </nav>
-
-      <div class="header-actions">
-        <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
-          🛒 想買
-        </a>
-        <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
-          📦 想賣
-        </a>
-      </div>
     </div>
   </header>
 
@@ -1043,85 +559,327 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <div class="badge">
-            ✨ 潮流收藏買賣平台
-          </div>
-
-          <h1>
-            買得開心，<br />
-            賣得放心，<br />
-            <span class="gradient-text">Cash2Joy</span>
-          </h1>
-
+          <h1>精選好物，<br><span>輕鬆查詢。</span></h1>
           <p>
-            專注收藏卡、潮流玩具、精品好物買賣及寄賣代售。
-            無論你想搵心頭好，定係想將收藏變現，都可以用 WhatsApp 快速查詢。
+            歡迎來到 Cash2Joy。這裡展示我們的精選貨物，你可以瀏覽相片、查看簡介及價錢，
+            然後一鍵透過 WhatsApp 查詢心水商品。
           </p>
 
           <div class="hero-actions">
-            <a href="#" class="btn btn-buy whatsapp-buy" target="_blank" rel="noopener">
-              🛒 我想買 / 查詢貨品
-            </a>
-            <a href="#" class="btn btn-sell whatsapp-sell" target="_blank" rel="noopener">
-              📦 我想賣 / 寄賣代售
-            </a>
-            <a href="#products" class="btn btn-outline">
-              🔥 睇貨物展示
-            </a>
-          </div>
-
-          <div class="hero-points">
-            <span>⚡ WhatsApp 快速回覆</span>
-            <span>🔍 清楚報價</span>
-            <span>🤝 靈活交收</span>
-            <span>💎 精選收藏</span>
+            <a class="btn btn-primary" href="#products">立即睇貨</a>
+            <a class="btn btn-outline" href="#how-to-buy">如何查詢？</a>
           </div>
         </div>
 
-        <div class="phone-card-wrap" aria-hidden="true">
-          <div class="phone-card">
-            <div class="phone-screen">
-              <div class="phone-top">
-                <div class="phone-title">
-                  Cash2Joy Picks
-                  <small>New drops this week</small>
-                </div>
-                <div class="avatar">C2J</div>
-              </div>
-
-              <div class="story-row">
-                <div class="story"><div>🃏</div></div>
-                <div class="story"><div>🎮</div></div>
-                <div class="story"><div>🧸</div></div>
-                <div class="story"><div>⌚</div></div>
-              </div>
-
-              <div class="feature-product">
-                <div class="product-emoji">🃏</div>
-                <h3>人氣收藏卡組合</h3>
-                <p>精選卡款、狀態清晰、適合收藏或送禮。</p>
-              </div>
-
-              <div class="mini-grid">
-                <div class="mini-card">
-                  <strong>想買？</strong>
-                  <span>即時查價</span>
-                </div>
-                <div class="mini-card">
-                  <strong>想賣？</strong>
-                  <span>快速估價</span>
-                </div>
-                <div class="mini-card">
-                  <strong>寄賣</strong>
-                  <span>流程簡單</span>
-                </div>
-                <div class="mini-card">
-                  <strong>交收</strong>
-                  <span>彈性安排</span>
-                </div>
-              </div>
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <div>
+              <div class="emoji">🛍️</div>
+              <h2>Cash2Joy 貨物展示</h2>
+              <p>清晰相片、簡介、價錢，一鍵 WhatsApp 查詢。</p>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <section class="products" id="products">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>最新貨物</h2>
+            <p>可以搜尋標題、簡介或用分類篩選。</p>
+          </div>
+          <p id="productCount"></p>
+        </div>
+
+        <div class="toolbar">
+          <input
+            id="searchInput"
+            class="search-box"
+            type="search"
+            placeholder="搜尋貨物，例如：手袋、電話、飾物..."
+            aria-label="搜尋貨物"
+          />
+
+          <select id="categoryFilter" class="filter-box" aria-label="分類篩選">
+            <option value="全部">全部分類</option>
+          </select>
+        </div>
+
+        <div id="productGrid" class="product-grid"></div>
+
+        <div id="emptyState" class="empty">
+          找不到相關貨物，可以試試其他關鍵字。
+        </div>
+      </div>
+    </section>
+
+    <section id="how-to-buy" class="products">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>查詢方法</h2>
+            <p>
+              選擇心水貨物後，按「聯絡我們」會自動打開 WhatsApp，
+              並帶上貨物標題、簡介及價錢，方便你直接查詢。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Cash2Joy. All rights reserved.
+    </div>
+  </footer>
+
+  <button class="back-top" id="backTop" aria-label="返回頂部">↑</button>
+
+  <script>
+    /*
+      =====================================================
+      Cash2Joy 貨物資料區
+      =====================================================
+
+      上貨方法：
+      1. 將相片放入 images 資料夾
+      2. 在下面 products 加一組貨物資料
+      3. 每件貨 images 最多放 10 張相
+      4. soldOut: true 代表售罄，false 代表有貨
+
+      圖片路徑例子：
+      "images/bag1.jpg"
+      "images/watch/photo1.png"
+    */
+
+    const WHATSAPP_NUMBER = "85212345678";
+
+    const products = [
+      {
+        title: "日系簡約斜孭袋",
+        category: "手袋",
+        price: "$188",
+        description: "輕身耐用，適合日常出街、返工或旅行使用。容量實用，顏色百搭。",
+        images: [
+          "images/bag1.jpg",
+          "images/bag2.jpg",
+          "images/bag3.jpg"
+        ],
+        soldOut: false
+      },
+      {
+        title: "復古皮革銀包",
+        category: "銀包",
+        price: "$128",
+        description: "手感柔軟，卡位充足，設計簡約耐看，男女都適合。",
+        images: [
+          "images/wallet1.jpg",
+          "images/wallet2.jpg"
+        ],
+        soldOut: false
+      },
+      {
+        title: "可愛桌面小夜燈",
+        category: "家品",
+        price: "$98",
+        description: "柔和燈光，適合床頭、書枱或送禮。USB 充電，方便實用。",
+        images: [
+          "images/lamp1.jpg",
+          "images/lamp2.jpg",
+          "images/lamp3.jpg",
+          "images/lamp4.jpg"
+        ],
+        soldOut: true
+      }
+    ];
+
+    /*
+      =====================================================
+      以下程式一般不用修改
+      =====================================================
+    */
+
+    const productGrid = document.getElementById("productGrid");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const emptyState = document.getElementById("emptyState");
+    const productCount = document.getElementById("productCount");
+    const backTop = document.getElementById("backTop");
+    const topWhatsapp = document.getElementById("topWhatsapp");
+
+    const sliderIndexes = {};
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    topWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}`;
+
+    function safeImages(images) {
+      if (!Array.isArray(images) || images.length === 0) {
+        return ["images/no-image.jpg"];
+      }
+
+      return images.slice(0, 10);
+    }
+
+    function createWhatsappLink(product) {
+      const message = [
+        "你好，我想查詢以下貨物：",
+        "",
+        `標題：${product.title}`,
+        `價錢：${product.price}`,
+        `簡介：${product.description}`,
+        "",
+        "請問還有貨嗎？"
+      ].join("\n");
+
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    function getCategories() {
+      const categories = ["全部", ...new Set(products.map(product => product.category || "其他"))];
+
+      categoryFilter.innerHTML = categories
+        .map(category => `<option value="${category}">${category}</option>`)
+        .join("");
+    }
+
+    function renderProducts() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      const selectedCategory = categoryFilter.value;
+
+      const filteredProducts = products.filter(product => {
+        const matchKeyword =
+          product.title.toLowerCase().includes(keyword) ||
+          product.description.toLowerCase().includes(keyword) ||
+          product.price.toLowerCase().includes(keyword) ||
+          product.category.toLowerCase().includes(keyword);
+
+        const matchCategory =
+          selectedCategory === "全部" || product.category === selectedCategory;
+
+        return matchKeyword && matchCategory;
+      });
+
+      productCount.textContent = `${filteredProducts.length} 件貨物`;
+
+      if (filteredProducts.length === 0) {
+        productGrid.innerHTML = "";
+        emptyState.style.display = "block";
+        return;
+      }
+
+      emptyState.style.display = "none";
+
+      productGrid.innerHTML = filteredProducts.map((product, index) => {
+        const images = safeImages(product.images);
+        const currentIndex = sliderIndexes[product.title] || 0;
+        const currentImage = images[currentIndex] || images[0];
+        const whatsappLink = createWhatsappLink(product);
+
+        return `
+          <article class="product-card">
+            <div class="image-slider">
+              <img
+                src="${currentImage}"
+                alt="${product.title}"
+                loading="lazy"
+                onerror="this.src='data:image/svg+xml;utf8,${encodeURIComponent(noImageSvg())}'"
+              />
+
+              <span class="badge ${product.soldOut ? "sold-badge" : ""}">
+                ${product.soldOut ? "售罄" : product.category}
+              </span>
+
+              ${images.length > 1 ? `
+                <button class="slider-btn prev" onclick="changeImage('${escapeQuote(product.title)}', -1)" aria-label="上一張相">‹</button>
+                <button class="slider-btn next" onclick="changeImage('${escapeQuote(product.title)}', 1)" aria-label="下一張相">›</button>
+                <span class="image-count">${currentIndex + 1} / ${images.length}</span>
+              ` : ""}
+            </div>
+
+            <div class="product-info">
+              <div class="product-category">${product.category}</div>
+              <h3 class="product-title">${product.title}</h3>
+              <p class="product-desc">${product.description}</p>
+
+              <div class="product-bottom">
+                <div class="price">${product.price}</div>
+
+                <a
+                  class="btn whatsapp-btn ${product.soldOut ? "disabled" : ""}"
+                  href="${product.soldOut ? "#" : whatsappLink}"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="透過 WhatsApp 查詢 ${product.title}"
+                >
+                  ${product.soldOut ? "已售罄" : "聯絡我們"}
+                </a>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function changeImage(productTitle, direction) {
+      const product = products.find(item => item.title === productTitle);
+      if (!product) return;
+
+      const images = safeImages(product.images);
+      const currentIndex = sliderIndexes[productTitle] || 0;
+      let nextIndex = currentIndex + direction;
+
+      if (nextIndex < 0) {
+        nextIndex = images.length - 1;
+      }
+
+      if (nextIndex >= images.length) {
+        nextIndex = 0;
+      }
+
+      sliderIndexes[productTitle] = nextIndex;
+      renderProducts();
+    }
+
+    function escapeQuote(text) {
+      return String(text).replace(/'/g, "\\'");
+    }
+
+    function noImageSvg() {
+      return `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+          <rect width="100%" height="100%" fill="#fff1e6"/>
+          <text x="50%" y="48%" dominant-baseline="middle" text-anchor="middle"
+            font-family="Arial" font-size="34" fill="#f47b45">Cash2Joy</text>
+          <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle"
+            font-family="Arial" font-size="18" fill="#777777">No Image</text>
+        </svg>
+      `;
+    }
+
+    searchInput.addEventListener("input", renderProducts);
+    categoryFilter.addEventListener("change", renderProducts);
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 500) {
+        backTop.classList.add("show");
+      } else {
+        backTop.classList.remove("show");
+      }
+    });
+
+    backTop.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    getCategories();
+    renderProducts();
+  </script>
+</body>
+</html>
