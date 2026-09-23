@@ -654,6 +654,20 @@
       "images/watch/photo1.png"
     */
 
+  if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    
+    window.addEventListener("DOMContentLoaded", function () {
+      window.scrollTo(0, 0);
+    });
+    
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        window.scrollTo(0, 0);
+      }, 100);
+    });
+
     const WHATSAPP_NUMBER = "85257052661";
 
     const products = [
