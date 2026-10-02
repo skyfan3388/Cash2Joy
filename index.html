@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Cash2Joy | 精選貨物展示</title>
   <meta name="description" content="Cash2Joy 精選貨物展示網站，輕鬆瀏覽心水商品並透過 WhatsApp 查詢。" />
 
@@ -372,6 +371,18 @@
       color: #fff;
     }
 
+    .stock-badge {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
     .product-info {
       padding: 18px;
       display: flex;
@@ -398,29 +409,14 @@
       flex: 1;
     }
 
-    .stock-status {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      color: #154a43;
-      background: #e7fbf7;
-      border: 1px solid #b8eee5;
-      border-radius: 999px;
-      padding: 5px 10px;
+    .product-warning {
+      color: #9a4b00;
       font-size: 0.78rem;
-      font-weight: 900;
-    }
-
-    .stock-status.low-stock {
-      color: #8a4c00;
-      background: #fff4d8;
-      border-color: #ffd58a;
-    }
-
-    .stock-status.sold-out {
-      color: #fff;
-      background: var(--danger);
-      border-color: var(--danger);
+      line-height: 1.5;
+      background: #fff7ed;
+      border: 1px solid #f3d2b2;
+      border-radius: 12px;
+      padding: 9px 10px;
     }
 
     .product-bottom {
@@ -462,14 +458,24 @@
     }
 
     .loading {
-      display: block;
       text-align: center;
       padding: 40px 20px;
       color: var(--muted);
       background: rgba(255, 255, 255, 0.7);
       border: 1px dashed var(--border);
       border-radius: var(--radius);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .error-box {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      color: #9f1239;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
     }
 
     footer {
@@ -500,16 +506,6 @@
 
     .back-top.show {
       display: grid;
-    }
-
-    .product-warning {
-      color: #9a4b00;
-      font-size: 0.78rem;
-      line-height: 1.5;
-      background: #fff7ed;
-      border: 1px solid #f3d2b2;
-      border-radius: 12px;
-      padding: 9px 10px;
     }
 
     @media (max-width: 960px) {
@@ -620,18 +616,6 @@
             <a class="btn btn-outline" href="#how-to-buy">如何查詢？</a>
           </div>
         </div>
-
-        <div class="hero-card">
-          <div class="hero-card-inner">
-            <div>
-              <div class="emoji">🃏</div>
-              <h2>Cash2Joy 精選收藏卡</h2>
-              <p>
-                商品資料由 Google Sheets 自動更新，方便查看現貨狀態。
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -640,7 +624,7 @@
         <div class="section-title">
           <div>
             <h2>精選貨物</h2>
-            <p id="productCount">正在載入貨物...</p>
+            <p id="productCount"></p>
           </div>
         </div>
 
@@ -659,7 +643,11 @@
         </div>
 
         <div id="loadingState" class="loading">
-          正在從 Google Sheets 載入貨物資料...
+          正在載入貨物資料...
+        </div>
+
+        <div id="errorState" class="error-box">
+          未能載入貨物資料，請稍後再試。
         </div>
 
         <div id="productGrid" class="product-grid"></div>
@@ -696,20 +684,16 @@
   <script>
     /*
       =====================================================
-      Cash2Joy Google Sheets 設定
+      Cash2Joy Google Products CSV 設定
       =====================================================
-    */
 
-    const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHK29_Oxp_NmYBeedwRIVua4CPz_P9VIAkI3d42vJimzHSUt3Ue8PO1aUR1ZGbUx593OvILbctBiIZ/pub?gid=0&single=true&output=csv";
+      Google Sheet 欄位需要包括：
+      id,title,category,price,description,warning,image1,image2,image3,active,sortOrder,stock,status
 
-    const WHATSAPP_NUMBER = "85257052661";
-
-    let products = [];
-
-    /*
-      =====================================================
-      以下程式一般不用修改
-      =====================================================
+      注意：
+      1. Google Sheet 需要 Publish to web
+      2. 這個連結需要是 output=csv
+      3. 圖片路徑如 images/JHP26.jpg，請確保網站內有相應圖片
     */
 
     if ("scrollRestoration" in history) {
@@ -726,14 +710,22 @@
       }, 100);
     });
 
+    const WHATSAPP_NUMBER = "85257052661";
+
+    const GOOGLE_PRODUCTS_CSV_URL =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHK29_Oxp_NmYBeedwRIVua4CPz_P9VIAkI3d42vJimzHSUt3Ue8PO1aUR1ZGbUx593OvILbctBiIZ/pub?gid=0&single=true&output=csv";
+
+    let products = [];
+
     const productGrid = document.getElementById("productGrid");
     const searchInput = document.getElementById("searchInput");
     const categoryFilter = document.getElementById("categoryFilter");
     const emptyState = document.getElementById("emptyState");
+    const loadingState = document.getElementById("loadingState");
+    const errorState = document.getElementById("errorState");
     const productCount = document.getElementById("productCount");
     const backTop = document.getElementById("backTop");
     const topWhatsapp = document.getElementById("topWhatsapp");
-    const loadingState = document.getElementById("loadingState");
 
     const sliderIndexes = {};
 
@@ -741,128 +733,185 @@
 
     topWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}`;
 
-    async function loadProductsFromSheet() {
-      try {
-        loadingState.style.display = "block";
-        emptyState.style.display = "none";
-        productGrid.innerHTML = "";
-        productCount.textContent = "正在載入貨物...";
+    async function loadProductsFromGoogleSheet() {
+      loadingState.style.display = "block";
+      errorState.style.display = "none";
+      emptyState.style.display = "none";
+      productGrid.innerHTML = "";
+      productCount.textContent = "";
 
-        const separator = GOOGLE_SHEET_CSV_URL.includes("?") ? "&" : "?";
-        const response = await fetch(GOOGLE_SHEET_CSV_URL + separator + "cacheBust=" + Date.now());
+      try {
+        const response = await fetch(GOOGLE_PRODUCTS_CSV_URL + "&cacheBust=" + Date.now());
 
         if (!response.ok) {
-          throw new Error("HTTP status: " + response.status);
+          throw new Error("Failed to load CSV");
         }
 
         const csvText = await response.text();
         const rows = parseCSV(csvText);
 
-        products = rows
-          .filter(product => String(product.active || "").trim().toUpperCase() === "TRUE")
-          .map(product => {
-            const images = [
-              product.image1,
-              product.image2,
-              product.image3
-            ]
-              .map(image => String(image || "").trim())
-              .filter(Boolean);
-
-            return {
-              id: String(product.id || "").trim(),
-              title: String(product.title || "").trim(),
-              category: String(product.category || "其他").trim(),
-              price: String(product.price || "").trim(),
-              description: String(product.description || "").trim(),
-              warning: String(product.warning || "").trim(),
-              images: images,
-              active: String(product.active || "").trim(),
-              sortOrder: Number(product.sortOrder || 9999),
-              stock: Number(product.stock || 0),
-              status: String(product.status || "").trim()
-            };
-          })
-          .sort((a, b) => a.sortOrder - b.sortOrder);
+        if (!rows || rows.length <= 1) {
+          products = [];
+        } else {
+          products = csvRowsToProducts(rows);
+        }
 
         loadingState.style.display = "none";
 
         getCategories();
         renderProducts();
       } catch (error) {
-        console.error("Google Sheets 載入失敗：", error);
+        console.error("Google Sheet 載入失敗：", error);
 
         loadingState.style.display = "none";
-        productGrid.innerHTML = "";
-        productCount.textContent = "載入失敗";
-        emptyState.style.display = "block";
-        emptyState.textContent = "暫時未能載入貨物資料，請稍後再試。";
+        errorState.style.display = "block";
+        productCount.textContent = "未能載入貨物資料";
       }
     }
 
-    function parseCSV(csvText) {
+    function parseCSV(text) {
       const rows = [];
       let currentRow = [];
       let currentValue = "";
       let insideQuotes = false;
 
-      for (let i = 0; i < csvText.length; i++) {
-        const char = csvText[i];
-        const nextChar = csvText[i + 1];
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
 
         if (char === '"' && insideQuotes && nextChar === '"') {
           currentValue += '"';
           i++;
-        } else if (char === '"') {
+          continue;
+        }
+
+        if (char === '"') {
           insideQuotes = !insideQuotes;
-        } else if (char === "," && !insideQuotes) {
+          continue;
+        }
+
+        if (char === "," && !insideQuotes) {
           currentRow.push(currentValue);
           currentValue = "";
-        } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+          continue;
+        }
+
+        if ((char === "\n" || char === "\r") && !insideQuotes) {
           if (char === "\r" && nextChar === "\n") {
             i++;
           }
 
-          if (currentValue !== "" || currentRow.length > 0) {
-            currentRow.push(currentValue);
+          currentRow.push(currentValue);
+
+          if (currentRow.some(cell => cell.trim() !== "")) {
             rows.push(currentRow);
-            currentRow = [];
-            currentValue = "";
           }
-        } else {
-          currentValue += char;
+
+          currentRow = [];
+          currentValue = "";
+          continue;
         }
+
+        currentValue += char;
       }
 
       if (currentValue !== "" || currentRow.length > 0) {
         currentRow.push(currentValue);
+
+        if (currentRow.some(cell => cell.trim() !== "")) {
+          rows.push(currentRow);
+        }
       }
 
-      if (!rows.length) {
-        return [];
-      }
+      return rows;
+    }
 
-      const headers = rows.shift().map(header => header.trim());
+    function csvRowsToProducts(rows) {
+      const headers = rows[0].map(header => cleanText(header));
 
       return rows
-        .filter(row => row.some(cell => String(cell || "").trim() !== ""))
+        .slice(1)
         .map(row => {
-          const obj = {};
+          const item = {};
 
           headers.forEach((header, index) => {
-            obj[header] = row[index] ? String(row[index]).trim() : "";
+            item[header] = cleanText(row[index] || "");
           });
 
-          return obj;
+          const activeValue = String(item.active || "").trim().toLowerCase();
+
+          const isActive =
+            activeValue === "true" ||
+            activeValue === "yes" ||
+            activeValue === "1" ||
+            activeValue === "y";
+
+          const stockNumber = Number(item.stock || 0);
+          const statusText = item.status || "";
+
+          const soldOut =
+            stockNumber <= 0 ||
+            statusText.includes("售罄") ||
+            statusText.toLowerCase().includes("sold");
+
+          const images = [
+            item.image1,
+            item.image2,
+            item.image3
+          ].filter(image => image && image.trim() !== "");
+
+          return {
+            id: item.id || "",
+            title: item.title || "未命名貨物",
+            category: item.category || "其他",
+            price: item.price || "",
+            description: item.description || "",
+            warning: item.warning || "",
+            images: images,
+            active: isActive,
+            sortOrder: Number(item.sortOrder || 9999),
+            stock: Number.isNaN(stockNumber) ? 0 : stockNumber,
+            status: statusText || (soldOut ? "售罄" : "有貨"),
+            soldOut: soldOut
+          };
+        })
+        .filter(product => product.active)
+        .sort((a, b) => {
+          if (a.sortOrder !== b.sortOrder) {
+            return a.sortOrder - b.sortOrder;
+          }
+
+          return a.title.localeCompare(b.title, "zh-HK");
         });
+    }
+
+    function cleanText(value) {
+      return String(value || "")
+        .replace(/^\uFEFF/, "")
+        .trim();
+    }
+
+    function escapeHtml(text) {
+      return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeAttribute(text) {
+      return escapeHtml(text);
     }
 
     function safeImages(images) {
       if (!Array.isArray(images) || images.length === 0) {
-        return ["NO_IMAGE"];
+        return ["images/no-image.jpg"];
       }
 
-      return images.slice(0, 10);
+      return images
+        .filter(image => image && String(image).trim() !== "")
+        .slice(0, 10);
     }
 
     function createWhatsappLink(product) {
@@ -871,7 +920,8 @@
         "",
         `標題：${product.title}`,
         `價錢：${product.price}`,
-        `狀態：${product.status || getStockLabel(product)}`,
+        `狀態：${product.status}`,
+        `存貨：${product.stock}`,
         `簡介：${product.description}`,
         "",
         "請問還有貨嗎？"
@@ -884,7 +934,7 @@
       const categories = ["全部", ...new Set(products.map(product => product.category || "其他"))];
 
       categoryFilter.innerHTML = categories
-        .map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`)
+        .map(category => `<option value="${escapeAttribute(category)}">${escapeHtml(category)}</option>`)
         .join("");
     }
 
@@ -893,12 +943,15 @@
       const selectedCategory = categoryFilter.value;
 
       const filteredProducts = products.filter(product => {
-        const matchKeyword =
-          String(product.title || "").toLowerCase().includes(keyword) ||
-          String(product.description || "").toLowerCase().includes(keyword) ||
-          String(product.price || "").toLowerCase().includes(keyword) ||
-          String(product.category || "").toLowerCase().includes(keyword) ||
-          String(product.status || "").toLowerCase().includes(keyword);
+        const searchableText = [
+          product.title,
+          product.description,
+          product.price,
+          product.category,
+          product.status
+        ].join(" ").toLowerCase();
+
+        const matchKeyword = searchableText.includes(keyword);
 
         const matchCategory =
           selectedCategory === "全部" || product.category === selectedCategory;
@@ -916,41 +969,34 @@
 
       emptyState.style.display = "none";
 
-      productGrid.innerHTML = filteredProducts.map(product => {
+      productGrid.innerHTML = filteredProducts.map((product) => {
         const images = safeImages(product.images);
-        const currentIndex = sliderIndexes[product.id || product.title] || 0;
+        const productKey = product.id || product.title;
+        const currentIndex = sliderIndexes[productKey] || 0;
         const currentImage = images[currentIndex] || images[0];
         const whatsappLink = createWhatsappLink(product);
-        const soldOut = Number(product.stock || 0) <= 0;
-        const stockLabel = product.status || getStockLabel(product);
-        const stockClass = getStockClass(product);
-        const sliderKey = product.id || product.title;
 
         return `
           <article class="product-card">
             <div class="image-slider">
-              ${
-                currentImage === "NO_IMAGE"
-                  ? `<img
-                      src="data:image/svg+xml;utf8,${encodeURIComponent(noImageSvg())}"
-                      alt="${escapeAttribute(product.title)}"
-                      loading="lazy"
-                    />`
-                  : `<img
-                      src="${escapeAttribute(currentImage)}"
-                      alt="${escapeAttribute(product.title)}"
-                      loading="lazy"
-                      onerror="this.src='data:image/svg+xml;utf8,${encodeURIComponent(noImageSvg())}'"
-                    />`
-              }
+              <img
+                src="${escapeAttribute(currentImage)}"
+                alt="${escapeAttribute(product.title)}"
+                loading="lazy"
+                onerror="this.src='data:image/svg+xml;utf8,${encodeURIComponent(noImageSvg())}'"
+              />
 
-              <span class="badge ${soldOut ? "sold-badge" : ""}">
-                ${soldOut ? "售罄" : escapeHtml(product.category)}
+              <span class="badge ${product.soldOut ? "sold-badge" : ""}">
+                ${product.soldOut ? "售罄" : escapeHtml(product.category)}
+              </span>
+
+              <span class="stock-badge">
+                ${escapeHtml(product.status || "")}${product.stock > 0 ? `｜${product.stock} 件` : ""}
               </span>
 
               ${images.length > 1 ? `
-                <button class="slider-btn prev" onclick="changeImage('${escapeQuote(sliderKey)}', -1)" aria-label="上一張相">‹</button>
-                <button class="slider-btn next" onclick="changeImage('${escapeQuote(sliderKey)}', 1)" aria-label="下一張相">›</button>
+                <button class="slider-btn prev" onclick="changeImage('${escapeJsString(productKey)}', -1)" aria-label="上一張相">‹</button>
+                <button class="slider-btn next" onclick="changeImage('${escapeJsString(productKey)}', 1)" aria-label="下一張相">›</button>
                 <span class="image-count">${currentIndex + 1} / ${images.length}</span>
               ` : ""}
             </div>
@@ -960,10 +1006,6 @@
               <h3 class="product-title">${escapeHtml(product.title)}</h3>
               <p class="product-desc">${escapeHtml(product.description)}</p>
 
-              <div class="stock-status ${stockClass}">
-                ${escapeHtml(stockLabel)}
-              </div>
-
               ${product.warning ? `
                 <p class="product-warning">${escapeHtml(product.warning)}</p>
               ` : ""}
@@ -972,13 +1014,13 @@
                 <div class="price">${escapeHtml(product.price)}</div>
 
                 <a
-                  class="btn whatsapp-btn ${soldOut ? "disabled" : ""}"
-                  href="${soldOut ? "#" : whatsappLink}"
+                  class="btn whatsapp-btn ${product.soldOut ? "disabled" : ""}"
+                  href="${product.soldOut ? "#" : escapeAttribute(whatsappLink)}"
                   target="_blank"
                   rel="noopener"
                   aria-label="透過 WhatsApp 查詢 ${escapeAttribute(product.title)}"
                 >
-                  ${soldOut ? "已售罄" : "聯絡我們"}
+                  ${product.soldOut ? "已售罄" : "聯絡我們"}
                 </a>
               </div>
             </div>
@@ -1007,51 +1049,13 @@
       renderProducts();
     }
 
-    function getStockLabel(product) {
-      const stock = Number(product.stock || 0);
-
-      if (stock <= 0) {
-        return "售罄";
-      }
-
-      if (stock === 1) {
-        return "最後1件";
-      }
-
-      return "有貨";
-    }
-
-    function getStockClass(product) {
-      const stock = Number(product.stock || 0);
-
-      if (stock <= 0) {
-        return "sold-out";
-      }
-
-      if (stock === 1) {
-        return "low-stock";
-      }
-
-      return "";
-    }
-
-    function escapeQuote(text) {
+    function escapeJsString(text) {
       return String(text || "")
         .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-    }
-
-    function escapeHtml(value) {
-      return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function escapeAttribute(value) {
-      return escapeHtml(value);
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r");
     }
 
     function noImageSvg() {
@@ -1084,7 +1088,7 @@
       });
     });
 
-    loadProductsFromSheet();
+    loadProductsFromGoogleSheet();
   </script>
 </body>
 </html>
