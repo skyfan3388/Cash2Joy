@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Cash2Joy | 精選貨物展示</title>
   <meta name="description" content="Cash2Joy 精選貨物展示網站，輕鬆瀏覽心水商品並透過 WhatsApp 查詢。" />
 
@@ -294,24 +295,24 @@
       box-shadow: 0 16px 38px rgba(60, 38, 20, 0.12);
     }
 
-.image-slider {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  background: var(--soft);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .image-slider {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: var(--soft);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.image-slider img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
-  display: block;
-  transition: opacity 0.2s ease;
-}
+    .image-slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
 
     .slider-btn {
       position: absolute;
@@ -397,6 +398,31 @@
       flex: 1;
     }
 
+    .stock-status {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      color: #154a43;
+      background: #e7fbf7;
+      border: 1px solid #b8eee5;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .stock-status.low-stock {
+      color: #8a4c00;
+      background: #fff4d8;
+      border-color: #ffd58a;
+    }
+
+    .stock-status.sold-out {
+      color: #fff;
+      background: var(--danger);
+      border-color: var(--danger);
+    }
+
     .product-bottom {
       display: flex;
       align-items: center;
@@ -435,6 +461,17 @@
       border-radius: var(--radius);
     }
 
+    .loading {
+      display: block;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+    }
+
     footer {
       border-top: 1px solid var(--border);
       padding: 30px 0;
@@ -465,6 +502,16 @@
       display: grid;
     }
 
+    .product-warning {
+      color: #9a4b00;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      background: #fff7ed;
+      border: 1px solid #f3d2b2;
+      border-radius: 12px;
+      padding: 9px 10px;
+    }
+
     @media (max-width: 960px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -479,16 +526,6 @@
       }
     }
 
-.product-warning {
-  color: #9a4b00;
-  font-size: 0.78rem;
-  line-height: 1.5;
-  background: #fff7ed;
-  border: 1px solid #f3d2b2;
-  border-radius: 12px;
-  padding: 9px 10px;
-}
-    
     @media (max-width: 640px) {
       .container {
         width: min(100% - 22px, 1180px);
@@ -583,13 +620,28 @@
             <a class="btn btn-outline" href="#how-to-buy">如何查詢？</a>
           </div>
         </div>
+
+        <div class="hero-card">
+          <div class="hero-card-inner">
+            <div>
+              <div class="emoji">🃏</div>
+              <h2>Cash2Joy 精選收藏卡</h2>
+              <p>
+                商品資料由 Google Sheets 自動更新，方便查看現貨狀態。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="products" id="products">
       <div class="container">
         <div class="section-title">
-
-          <p id="productCount"></p>
+          <div>
+            <h2>精選貨物</h2>
+            <p id="productCount">正在載入貨物...</p>
+          </div>
         </div>
 
         <div class="toolbar">
@@ -597,13 +649,17 @@
             id="searchInput"
             class="search-box"
             type="search"
-            placeholder="搜尋貨物，例如：手袋、電話、飾物..."
+            placeholder="搜尋貨物，例如：收藏卡、JUICY HONEY..."
             aria-label="搜尋貨物"
           />
 
           <select id="categoryFilter" class="filter-box" aria-label="分類篩選">
             <option value="全部">全部分類</option>
           </select>
+        </div>
+
+        <div id="loadingState" class="loading">
+          正在從 Google Sheets 載入貨物資料...
         </div>
 
         <div id="productGrid" class="product-grid"></div>
@@ -640,88 +696,35 @@
   <script>
     /*
       =====================================================
-      Cash2Joy 貨物資料區
+      Cash2Joy Google Sheets 設定
       =====================================================
-
-      上貨方法：
-      1. 將相片放入 images 資料夾
-      2. 在下面 products 加一組貨物資料
-      3. 每件貨 images 最多放 10 張相
-      4. soldOut: true 代表售罄，false 代表有貨
-
-      圖片路徑例子：
-      "images/bag1.jpg"
-      "images/watch/photo1.png"
     */
 
-  if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-    
-    window.addEventListener("DOMContentLoaded", function () {
-      window.scrollTo(0, 0);
-    });
-    
-    window.addEventListener("load", function () {
-      setTimeout(function () {
-        window.scrollTo(0, 0);
-      }, 100);
-    });
+    const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHK29_Oxp_NmYBeedwRIVua4CPz_P9VIAkI3d42vJimzHSUt3Ue8PO1aUR1ZGbUx593OvILbctBiIZ/pub?gid=0&single=true&output=csv";
 
     const WHATSAPP_NUMBER = "85257052661";
 
-    const products = [
-      {
-        title: "JUICY HONEY PLUS #24",
-        category: "收藏卡",
-        price: "$1380",
-        description: "櫻若菜、戀渕桃奈、山岸逢花、金松季步。歐洲傳統洋裝 (Dirndl)以巴伐利亞及阿爾卑斯山地區的傳統少女洋裝為靈感，展現充滿異國古典風情與甜美誘惑的寫真風格。",
-        warning: "警告：本物品內容可能令人反感；不可將本物品派發、傳閱、出售、出租、交給或出借予年齡未滿18歲的人士或將本物品向該等人士出示、播放或放映。WARNING: This article contains material which may offend and may not be distributed, circulated, sold, hired, given or lent to persons under the age of 18 years or passed to such persons for inspection, viewing or playing.",
-        images: [
-          "images/JHP24.jpg"
-        ],
-        soldOut: false
-      },
-      {
-        title: "JUICY HONEY PLUS #26",
-        category: "收藏卡",
-        price: "$1380",
-        description: "白上咲花、miru、戀渕桃奈、小野六花美式啦啦隊 (Cheerleader)女優們換上青春洋溢的藍白美式啦啦隊制服與短裙，將充滿活力的應援動作與極具反差的性感身段完美結合。",
-        warning: "警告：本物品內容可能令人反感；不可將本物品派發、傳閱、出售、出租、交給或出借予年齡未滿18歲的人士或將本物品向該等人士出示、播放或放映。WARNING: This article contains material which may offend and may not be distributed, circulated, sold, hired, given or lent to persons under the age of 18 years or passed to such persons for inspection, viewing or playing.",
-        images: [
-          "images/JHP26.jpg"
-        ],
-        soldOut: false
-      },
-      {
-        title: "JUICY HONEY PLUS #28",
-        category: "收藏卡",
-        price: "$1380",
-        description: "逢澤美優、伊藤舞雪、Julia、淺野心時尚健身服 (Sports/Gym)以運動健美為核心，女優們身穿緊身健身服、瑜珈褲或運動內衣，凸顯經汗水潤飾後的火辣身材與線條美。",
-        warning: "警告：本物品內容可能令人反感；不可將本物品派發、傳閱、出售、出租、交給或出借予年齡未滿18歲的人士或將本物品向該等人士出示、播放或放映。WARNING: This article contains material which may offend and may not be distributed, circulated, sold, hired, given or lent to persons under the age of 18 years or passed to such persons for inspection, viewing or playing.",
-        images: [
-          "images/JHP28.jpg"
-        ],
-        soldOut: false
-      },
-      {
-        title: "JUICY HONEY PLUS #30",
-        category: "收藏卡",
-        price: "$1380",
-        description: "濱邊彌生、miru、神木麗、天神羽衣俏麗護士服 (Nurse & Stockings)此彈以經典的護士服為視覺主軸，並著重於絲襪、吊襪帶等元素，帶來極具挑逗性與角色扮演張力的精美收藏卡。",
-        warning: "警告：本物品內容可能令人反感；不可將本物品派發、傳閱、出售、出租、交給或出借予年齡未滿18歲的人士或將本物品向該等人士出示、播放或放映。WARNING: This article contains material which may offend and may not be distributed, circulated, sold, hired, given or lent to persons under the age of 18 years or passed to such persons for inspection, viewing or playing.",
-        images: [
-          "images/JHP30.jpg"
-        ],
-        soldOut: false
-      }
-    ];
+    let products = [];
 
     /*
       =====================================================
       以下程式一般不用修改
       =====================================================
     */
+
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+      window.scrollTo(0, 0);
+    });
+
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        window.scrollTo(0, 0);
+      }, 100);
+    });
 
     const productGrid = document.getElementById("productGrid");
     const searchInput = document.getElementById("searchInput");
@@ -730,6 +733,7 @@
     const productCount = document.getElementById("productCount");
     const backTop = document.getElementById("backTop");
     const topWhatsapp = document.getElementById("topWhatsapp");
+    const loadingState = document.getElementById("loadingState");
 
     const sliderIndexes = {};
 
@@ -737,9 +741,125 @@
 
     topWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}`;
 
+    async function loadProductsFromSheet() {
+      try {
+        loadingState.style.display = "block";
+        emptyState.style.display = "none";
+        productGrid.innerHTML = "";
+        productCount.textContent = "正在載入貨物...";
+
+        const separator = GOOGLE_SHEET_CSV_URL.includes("?") ? "&" : "?";
+        const response = await fetch(GOOGLE_SHEET_CSV_URL + separator + "cacheBust=" + Date.now());
+
+        if (!response.ok) {
+          throw new Error("HTTP status: " + response.status);
+        }
+
+        const csvText = await response.text();
+        const rows = parseCSV(csvText);
+
+        products = rows
+          .filter(product => String(product.active || "").trim().toUpperCase() === "TRUE")
+          .map(product => {
+            const images = [
+              product.image1,
+              product.image2,
+              product.image3
+            ]
+              .map(image => String(image || "").trim())
+              .filter(Boolean);
+
+            return {
+              id: String(product.id || "").trim(),
+              title: String(product.title || "").trim(),
+              category: String(product.category || "其他").trim(),
+              price: String(product.price || "").trim(),
+              description: String(product.description || "").trim(),
+              warning: String(product.warning || "").trim(),
+              images: images,
+              active: String(product.active || "").trim(),
+              sortOrder: Number(product.sortOrder || 9999),
+              stock: Number(product.stock || 0),
+              status: String(product.status || "").trim()
+            };
+          })
+          .sort((a, b) => a.sortOrder - b.sortOrder);
+
+        loadingState.style.display = "none";
+
+        getCategories();
+        renderProducts();
+      } catch (error) {
+        console.error("Google Sheets 載入失敗：", error);
+
+        loadingState.style.display = "none";
+        productGrid.innerHTML = "";
+        productCount.textContent = "載入失敗";
+        emptyState.style.display = "block";
+        emptyState.textContent = "暫時未能載入貨物資料，請稍後再試。";
+      }
+    }
+
+    function parseCSV(csvText) {
+      const rows = [];
+      let currentRow = [];
+      let currentValue = "";
+      let insideQuotes = false;
+
+      for (let i = 0; i < csvText.length; i++) {
+        const char = csvText[i];
+        const nextChar = csvText[i + 1];
+
+        if (char === '"' && insideQuotes && nextChar === '"') {
+          currentValue += '"';
+          i++;
+        } else if (char === '"') {
+          insideQuotes = !insideQuotes;
+        } else if (char === "," && !insideQuotes) {
+          currentRow.push(currentValue);
+          currentValue = "";
+        } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+          if (char === "\r" && nextChar === "\n") {
+            i++;
+          }
+
+          if (currentValue !== "" || currentRow.length > 0) {
+            currentRow.push(currentValue);
+            rows.push(currentRow);
+            currentRow = [];
+            currentValue = "";
+          }
+        } else {
+          currentValue += char;
+        }
+      }
+
+      if (currentValue !== "" || currentRow.length > 0) {
+        currentRow.push(currentValue);
+      }
+
+      if (!rows.length) {
+        return [];
+      }
+
+      const headers = rows.shift().map(header => header.trim());
+
+      return rows
+        .filter(row => row.some(cell => String(cell || "").trim() !== ""))
+        .map(row => {
+          const obj = {};
+
+          headers.forEach((header, index) => {
+            obj[header] = row[index] ? String(row[index]).trim() : "";
+          });
+
+          return obj;
+        });
+    }
+
     function safeImages(images) {
       if (!Array.isArray(images) || images.length === 0) {
-        return ["images/no-image.jpg"];
+        return ["NO_IMAGE"];
       }
 
       return images.slice(0, 10);
@@ -751,6 +871,7 @@
         "",
         `標題：${product.title}`,
         `價錢：${product.price}`,
+        `狀態：${product.status || getStockLabel(product)}`,
         `簡介：${product.description}`,
         "",
         "請問還有貨嗎？"
@@ -763,7 +884,7 @@
       const categories = ["全部", ...new Set(products.map(product => product.category || "其他"))];
 
       categoryFilter.innerHTML = categories
-        .map(category => `<option value="${category}">${category}</option>`)
+        .map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`)
         .join("");
     }
 
@@ -773,10 +894,11 @@
 
       const filteredProducts = products.filter(product => {
         const matchKeyword =
-          product.title.toLowerCase().includes(keyword) ||
-          product.description.toLowerCase().includes(keyword) ||
-          product.price.toLowerCase().includes(keyword) ||
-          product.category.toLowerCase().includes(keyword);
+          String(product.title || "").toLowerCase().includes(keyword) ||
+          String(product.description || "").toLowerCase().includes(keyword) ||
+          String(product.price || "").toLowerCase().includes(keyword) ||
+          String(product.category || "").toLowerCase().includes(keyword) ||
+          String(product.status || "").toLowerCase().includes(keyword);
 
         const matchCategory =
           selectedCategory === "全部" || product.category === selectedCategory;
@@ -794,53 +916,69 @@
 
       emptyState.style.display = "none";
 
-      productGrid.innerHTML = filteredProducts.map((product, index) => {
+      productGrid.innerHTML = filteredProducts.map(product => {
         const images = safeImages(product.images);
-        const currentIndex = sliderIndexes[product.title] || 0;
+        const currentIndex = sliderIndexes[product.id || product.title] || 0;
         const currentImage = images[currentIndex] || images[0];
         const whatsappLink = createWhatsappLink(product);
+        const soldOut = Number(product.stock || 0) <= 0;
+        const stockLabel = product.status || getStockLabel(product);
+        const stockClass = getStockClass(product);
+        const sliderKey = product.id || product.title;
 
         return `
           <article class="product-card">
             <div class="image-slider">
-              <img
-                src="${currentImage}"
-                alt="${product.title}"
-                loading="lazy"
-                onerror="this.src='data:image/svg+xml;utf8,${encodeURIComponent(noImageSvg())}'"
-              />
+              ${
+                currentImage === "NO_IMAGE"
+                  ? `<img
+                      src="data:image/svg+xml;utf8,${encodeURIComponent(noImageSvg())}"
+                      alt="${escapeAttribute(product.title)}"
+                      loading="lazy"
+                    />`
+                  : `<img
+                      src="${escapeAttribute(currentImage)}"
+                      alt="${escapeAttribute(product.title)}"
+                      loading="lazy"
+                      onerror="this.src='data:image/svg+xml;utf8,${encodeURIComponent(noImageSvg())}'"
+                    />`
+              }
 
-              <span class="badge ${product.soldOut ? "sold-badge" : ""}">
-                ${product.soldOut ? "售罄" : product.category}
+              <span class="badge ${soldOut ? "sold-badge" : ""}">
+                ${soldOut ? "售罄" : escapeHtml(product.category)}
               </span>
 
               ${images.length > 1 ? `
-                <button class="slider-btn prev" onclick="changeImage('${escapeQuote(product.title)}', -1)" aria-label="上一張相">‹</button>
-                <button class="slider-btn next" onclick="changeImage('${escapeQuote(product.title)}', 1)" aria-label="下一張相">›</button>
+                <button class="slider-btn prev" onclick="changeImage('${escapeQuote(sliderKey)}', -1)" aria-label="上一張相">‹</button>
+                <button class="slider-btn next" onclick="changeImage('${escapeQuote(sliderKey)}', 1)" aria-label="下一張相">›</button>
                 <span class="image-count">${currentIndex + 1} / ${images.length}</span>
               ` : ""}
             </div>
 
             <div class="product-info">
-              <div class="product-category">${product.category}</div>
-              <h3 class="product-title">${product.title}</h3>
-              <p class="product-desc">${product.description}</p>
+              <div class="product-category">${escapeHtml(product.category)}</div>
+              <h3 class="product-title">${escapeHtml(product.title)}</h3>
+              <p class="product-desc">${escapeHtml(product.description)}</p>
+
+              <div class="stock-status ${stockClass}">
+                ${escapeHtml(stockLabel)}
+              </div>
 
               ${product.warning ? `
-                <p class="product-warning">${product.warning}</p>
+                <p class="product-warning">${escapeHtml(product.warning)}</p>
               ` : ""}
 
               <div class="product-bottom">
-                <div class="price">${product.price}</div>
+                <div class="price">${escapeHtml(product.price)}</div>
 
                 <a
-                  class="btn whatsapp-btn ${product.soldOut ? "disabled" : ""}"
-                  href="${product.soldOut ? "#" : whatsappLink}"
+                  class="btn whatsapp-btn ${soldOut ? "disabled" : ""}"
+                  href="${soldOut ? "#" : whatsappLink}"
                   target="_blank"
                   rel="noopener"
-                  aria-label="透過 WhatsApp 查詢 ${product.title}"
+                  aria-label="透過 WhatsApp 查詢 ${escapeAttribute(product.title)}"
                 >
-                  ${product.soldOut ? "已售罄" : "聯絡我們"}
+                  ${soldOut ? "已售罄" : "聯絡我們"}
                 </a>
               </div>
             </div>
@@ -849,12 +987,12 @@
       }).join("");
     }
 
-    function changeImage(productTitle, direction) {
-      const product = products.find(item => item.title === productTitle);
+    function changeImage(productKey, direction) {
+      const product = products.find(item => (item.id || item.title) === productKey);
       if (!product) return;
 
       const images = safeImages(product.images);
-      const currentIndex = sliderIndexes[productTitle] || 0;
+      const currentIndex = sliderIndexes[productKey] || 0;
       let nextIndex = currentIndex + direction;
 
       if (nextIndex < 0) {
@@ -865,12 +1003,55 @@
         nextIndex = 0;
       }
 
-      sliderIndexes[productTitle] = nextIndex;
+      sliderIndexes[productKey] = nextIndex;
       renderProducts();
     }
 
+    function getStockLabel(product) {
+      const stock = Number(product.stock || 0);
+
+      if (stock <= 0) {
+        return "售罄";
+      }
+
+      if (stock === 1) {
+        return "最後1件";
+      }
+
+      return "有貨";
+    }
+
+    function getStockClass(product) {
+      const stock = Number(product.stock || 0);
+
+      if (stock <= 0) {
+        return "sold-out";
+      }
+
+      if (stock === 1) {
+        return "low-stock";
+      }
+
+      return "";
+    }
+
     function escapeQuote(text) {
-      return String(text).replace(/'/g, "\\'");
+      return String(text || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value);
     }
 
     function noImageSvg() {
@@ -903,8 +1084,7 @@
       });
     });
 
-    getCategories();
-    renderProducts();
+    loadProductsFromSheet();
   </script>
 </body>
 </html>
